@@ -13,7 +13,9 @@ namespace EndlessGame.Modules.Loading
 
         [Header("Animation")]
         [SerializeField]
-        private float animDuration = 1f;
+        private float outAnimDuration = 1f;
+        [SerializeField]
+        private float endAnimDuration = 0.1f;
         [SerializeField]
         private Animator loadingAnimator;
 
@@ -33,6 +35,8 @@ namespace EndlessGame.Modules.Loading
 
         private void Awake()
         {
+            Application.targetFrameRate = 60;
+
             AssetBundlesProvider.Instance.LoadAssetBundlesManifest(OnAssetBundlesManifestLoaded);
         }
 
@@ -62,7 +66,7 @@ namespace EndlessGame.Modules.Loading
 
             loadingAnimator.SetTrigger(ANIMATOR_OUT_TRIGGER);
 
-            yield return new WaitForSeconds(animDuration);
+            yield return new WaitForSeconds(outAnimDuration);
 
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnMenuSceneLoaded;
         }
@@ -84,7 +88,7 @@ namespace EndlessGame.Modules.Loading
         {
             loadingAnimator.SetTrigger(ANIMATOR_END_TRIGGER);
 
-            yield return new WaitForSeconds(animDuration);
+            yield return new WaitForSeconds(outAnimDuration);
 
             SceneManager.UnloadSceneAsync(0);
         }
