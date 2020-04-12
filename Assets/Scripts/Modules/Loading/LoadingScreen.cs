@@ -9,58 +9,92 @@ namespace EndlessGame.Modules.Loading
     {
         [Header("Settings")]
         [SerializeField]
-        private string[] assetBundles;
+        private float loadingDelay = 1f;
 
         [Header("Animation")]
         [SerializeField]
-        private float loadingDelay;
+        private float animDuration = 1f;
         [SerializeField]
         private Animator loadingAnimator;
 
+        [Header("References")]
+        [SerializeField]
+        private RectTransform logoTrans;
+
 
         private int m_loadedBundles = 0;
+        private LoadingManifest m_manifest = null;
 
-        private const string ANIMATOR_GOTO_TRIGGER = "GoToOut";
+        private const string ANIMATOR_OUT_TRIGGER = "GoToOut";
+        private const string ANIMATOR_END_TRIGGER = "GoToEnd";
         private const string NEXT_SCENE_NAME = "Menu";
+        private const string LOGO_CONTAINER_TAG = "Respawn";
 
 
         private void Awake()
         {
-            for (int i = 0, count = assetBundles.Length; i < count; i++)
-            {
-                AssetBundlesProvider.Instance.LoadAssetBundle(assetBundles[i], OnAssetBundleLoaded);
-            }
+            AssetBundlesProvider.Instance.LoadAssetBundlesManifest(OnAssetBundlesManifestLoaded);
         }
 
-        private IEnumerator GoToMenu()
+        private void OnAssetBundlesManifestLoaded(LoadingManifest pManifest)
         {
-            loadingAnimator.SetTrigger(ANIMATOR_GOTO_TRIGGER);
-
-            yield return new WaitForSeconds(loadingDelay);
-
-            SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnSceneLoaded;
+            m_manifest = pManifest;
+            
+            for (int i = 0, count = m_manifest.bundles.Length; i < count; i++)
+            {
+                AssetBundlesProvider.Instance.LoadAssetBundle(m_manifest.bundles[i], OnAssetBundleLoaded);
+            }
         }
 
         private void OnAssetBundleLoaded(AssetBundle pAssetBundle)
         {
             m_loadedBundles++;
 
-            if (m_loadedBundles == assetBundles.Length)
+            if (m_loadedBundles == m_manifest.bundles.Length)
             {
-                StartCoroutine(GoToMenu());
+                StartCoroutine(GoToOut());
             }
         }
 
-        private void OnSceneLoaded(AsyncOperation pOperation)
+        private IEnumerator GoToOut()
+        {
+            yield return new WaitForSeconds(loadingDelay);
+
+            loadingAnimator.SetTrigger(ANIMATOR_OUT_TRIGGER);
+
+            yield return new WaitForSeconds(animDuration);
+
+            SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnMenuSceneLoaded;
+        }
+
+        private void OnMenuSceneLoaded(AsyncOperation pOperation)
         {
             if (pOperation.isDone)
             {
-                SceneManager.UnloadSceneAsync(0);
+                MoveLogoToMenuScene();
+                StartCoroutine(GoToMenu());
             }
             else
             {
                 Debug.LogErrorFormat("LoadingScreen: failed to load '{0}' scene.", NEXT_SCENE_NAME);
             }
+        }
+
+        private IEnumerator GoToMenu()
+        {
+            loadingAnimator.SetTrigger(ANIMATOR_END_TRIGGER);
+
+            yield return new WaitForSeconds(animDuration);
+
+            SceneManager.UnloadSceneAsync(0);
+        }
+
+        private void MoveLogoToMenuScene()
+        {
+            Transform _container = GameObject.FindWithTag(LOGO_CONTAINER_TAG).transform;
+            
+            logoTrans.SetParent(_container, false);
+            logoTrans.anchoredPosition = Vector2.zero;
         }
     }
 }
