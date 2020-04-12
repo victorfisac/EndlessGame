@@ -6,12 +6,17 @@ namespace EndlessGame.Helpers
 {
     public class FrametimeComponent : MonoBehaviour
     {
-        private string label = string.Empty;
-        private float count = 0f;
+        private string m_label = string.Empty;
+        private float m_count = 0f;
+        private GUIStyle m_style = null;
 
 
         private void Awake()
         {
+            m_style = new GUIStyle();
+            m_style.fontSize = 30;
+            m_style.normal.textColor = Color.white;
+
             DontDestroyOnLoad(gameObject);
         }
         
@@ -23,23 +28,23 @@ namespace EndlessGame.Helpers
             {
                 if (Time.timeScale > 0f)
                 {
-                    yield return new WaitForSeconds (0.1f);
+                    yield return new WaitForSeconds(0.1f);
 
-                    count = 1f/Time.deltaTime;
-                    label = string.Concat("FPS :", Mathf.Round (count));
+                    m_count = 1f/Time.deltaTime;
+                    m_label = Mathf.Round(m_count).ToString();
                 }
                 else
                 {
-                    label = "PAUSE";
+                    m_label = "PAUSE";
                 }
 
-                yield return new WaitForSeconds (0.5f);
+                yield return new WaitForSeconds(0.5f);
             }
         }
         
-        private void OnGUI ()
+        private void OnGUI()
         {
-            GUI.Label(new Rect(5, 40, 100, 25), label);
+            GUI.Label(new Rect(40, 40, 100, 35), m_label, m_style);
         }
     }
 }
