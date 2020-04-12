@@ -1,7 +1,8 @@
 ﻿using System;
-using BestHTTP;
+using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Networking;
+using BestHTTP;
+
 
 namespace EndlessGame.Helpers
 {
@@ -10,11 +11,44 @@ namespace EndlessGame.Helpers
         private static AssetBundlesProvider m_instance = null;
         private static object m_lock = new object();
 
+        private Dictionary<string, AssetBundle> m_bundlesDict = new Dictionary<string, AssetBundle>();
+
         private const string BASE_URL = "https://www.victorfisac.com/files/endlessgame/";
+
+
+        public void LoadAssetBundlesManifest(Action<LoadingManifest> pOnManifestLoaded)
+        {
+            string _uri = string.Concat(BASE_URL, "manifest.json");
+
+            HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
+                if (res.IsSuccess)
+                {
+                    LoadingManifest _manifest = JsonUtility.FromJson<LoadingManifest>(res.DataAsText);
+
+                    if (pOnManifestLoaded != null)
+                        pOnManifestLoaded(_manifest);
+                }
+                else
+                {
+                    Debug.LogError("AssetBundlesProvider: failed to load asset bundles manifest.");
+                }
+
+                req.Dispose();
+                res.Dispose();
+            });
+
+            _request.Send();
+        }
 
 
         public void LoadAssetBundle(string pAssetBundle, Action<AssetBundle> pOnAssetBundleLoaded = null)
         {
+            if (m_bundlesDict.ContainsKey(pAssetBundle))
+            {
+                pOnAssetBundleLoaded(m_bundlesDict[pAssetBundle]);
+                return;
+            }
+
             string _uri = string.Concat(BASE_URL, pAssetBundle);
             
             HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
@@ -24,7 +58,10 @@ namespace EndlessGame.Helpers
                     _bundleRequest.completed += (op) => { 
                         if (op.isDone)
                         {
-                            pOnAssetBundleLoaded(_bundleRequest.assetBundle);
+                            m_bundlesDict.Add(pAssetBundle, _bundleRequest.assetBundle);
+
+                            if (pOnAssetBundleLoaded != null)
+                                pOnAssetBundleLoaded(_bundleRequest.assetBundle);
                         }
                         else
                         {
@@ -57,5 +94,11 @@ namespace EndlessGame.Helpers
                 return m_instance;
             }
         }
+    }
+
+    [SerializeField]
+    public class LoadingManifest
+    {
+        public string[] bundles;
     }
 }
