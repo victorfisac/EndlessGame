@@ -1,6 +1,5 @@
 {
   "dependencies": {
-    "com.unity.2d.pixel-perfect": "2.0.4",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.assetbundlebrowser": "1.7.0",
     "com.unity.ide.vscode": "1.1.3",
