@@ -2,10 +2,13 @@
 using System.Collections;
 
 
-namespace EndlessGame.Helpers
+namespace EndlessGame.Components
 {
     public class FrametimeComponent : MonoBehaviour
     {
+        private static FrametimeComponent m_instance = null;
+
+
         private string m_label = string.Empty;
         private float m_count = 0f;
         private GUIStyle m_style = null;
@@ -13,6 +16,15 @@ namespace EndlessGame.Helpers
 
         private void Awake()
         {
+            if (m_instance == null)
+            {
+                m_instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+
             m_style = new GUIStyle();
             m_style.fontSize = 30;
             m_style.normal.textColor = Color.white;
