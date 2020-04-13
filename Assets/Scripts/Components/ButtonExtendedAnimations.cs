@@ -45,6 +45,7 @@ namespace EndlessGame.Components
             switch (pButtonState)
             {
                 case 0: m_state = AnimState.NORMAL; break;
+                case 1: m_state = AnimState.NORMAL; break;
                 case 2: m_state = AnimState.PRESSED; break;
                 case 4: m_state = AnimState.DISABLED; break;
                 default: break;
