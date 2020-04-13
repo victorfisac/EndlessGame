@@ -1,6 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "UI/Overlay"
+﻿Shader "UI/Overlay"
 {
 	Properties
 	{
@@ -53,16 +51,16 @@ Shader "UI/Overlay"
                 
                 struct appdata_t
                 {
-                    float4 vertex   : POSITION;
-                    float4 color    : COLOR;
+                    float4 vertex : POSITION;
+                    float4 color : COLOR;
                     float2 texcoord : TEXCOORD0;
                 };
 
                 struct v2f
                 {
-                    float4 vertex   : SV_POSITION;
-                    fixed4 color    : COLOR;
-                    half2 texcoord  : TEXCOORD0;
+                    float4 vertex : SV_POSITION;
+                    fixed4 color : COLOR;
+                    half2 texcoord : TEXCOORD0;
                 };
                 
                 fixed4 _Color;
@@ -75,9 +73,9 @@ Shader "UI/Overlay"
                     
                     #ifdef UNITY_HALF_TEXEL_OFFSET
                     OUT.vertex.xy += (_ScreenParams.zw-1.0)*float2(-1,1);
-                    
                     #endif
-                    OUT.color = IN.color * _Color;
+
+                    OUT.color = IN.color*_Color;
                     return OUT;
                 }
 
@@ -85,11 +83,11 @@ Shader "UI/Overlay"
 
                 fixed4 frag(v2f IN) : SV_Target
                 {
-                    half4 color = tex2D(_MainTex, IN.texcoord) * IN.color;
+                    half4 color = tex2D(_MainTex, IN.texcoord)*IN.color;
                     clip (color.a - 0.01);
                     
                     float4 final;          
-                    final.rgb = IN.color.rgb * color.rgb * 2.0f;
+                    final.rgb = IN.color.rgb * color.rgb*2.0f;
                     final.a = IN.color.a * color.a;
 
                     return lerp(float4(0.5f, 0.5f, 0.5f, 0.5f), final, final.a);

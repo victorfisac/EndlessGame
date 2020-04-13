@@ -63,7 +63,7 @@
                     OUT.vertex.xy += (_ScreenParams.zw-1.0)*float2(-1,1);
                     #endif
                     
-                    OUT.color = IN.color * _Color;
+                    OUT.color = IN.color*_Color;
                     return OUT;
                 }
 
@@ -71,7 +71,7 @@
 
                 fixed4 frag(v2f IN) : SV_Target
                 {
-                    return (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd) * IN.color;
+                    return (tex2D(_MainTex, IN.texcoord) + _TextureSampleAdd)*IN.color;
                 }
 
 		    ENDCG
