@@ -1,4 +1,7 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 0649
+
+
+using UnityEngine;
 using UnityEngine.UI;
 
 
@@ -7,8 +10,6 @@ namespace EndlessGame.Modules.Logo
     public class LogoBehaviour : MonoBehaviour
     {
         [Header("Settings")]
-        [SerializeField]
-        private float circleSpeed;
         [SerializeField]
         private float ballSpeed;
         [SerializeField]
@@ -33,19 +34,6 @@ namespace EndlessGame.Modules.Logo
 
 
         private void Update()
-        {
-            UpdateLimitRotation();
-            UpdateBallPosition();
-        }
-
-        private void UpdateLimitRotation()
-        {
-            Vector3 _rotation = circleTrans.rotation.eulerAngles;
-            _rotation.z = Time.realtimeSinceStartup*circleSpeed;
-            circleTrans.rotation = Quaternion.Euler(_rotation);
-        }
-
-        private void UpdateBallPosition()
         {
             Vector2 _position = ballTrans.anchoredPosition;
             _position += m_direction*ballSpeed*Time.deltaTime;

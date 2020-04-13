@@ -1,7 +1,12 @@
-﻿using System.Collections;
+﻿#pragma warning disable 0649
+
+
+using System.Collections;
+using DG.Tweening;
 using EndlessGame.Helpers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
 
 namespace EndlessGame.Modules.Loading
 {
@@ -9,15 +14,13 @@ namespace EndlessGame.Modules.Loading
     {
         [Header("Settings")]
         [SerializeField]
-        private float loadingDelay = 1f;
+        private float loadingDelay;
 
         [Header("Animation")]
         [SerializeField]
-        private float outAnimDuration = 1f;
+        private float outAnimDuration;
         [SerializeField]
-        private float endAnimDuration = 0.1f;
-        [SerializeField]
-        private Animator loadingAnimator;
+        private float endAnimDuration;
 
         [Header("References")]
         [SerializeField]
@@ -27,8 +30,8 @@ namespace EndlessGame.Modules.Loading
         private int m_loadedBundles = 0;
         private LoadingManifest m_manifest = null;
 
-        private const string ANIMATOR_OUT_TRIGGER = "GoToOut";
-        private const string ANIMATOR_END_TRIGGER = "GoToEnd";
+        private const string ANIMATION_ID_OUT = "Loading_Out";
+        private const string ANIMATION_ID_END = "Loading_End";
         private const string NEXT_SCENE_NAME = "Menu";
         private const string LOGO_CONTAINER_TAG = "Respawn";
 
@@ -55,7 +58,7 @@ namespace EndlessGame.Modules.Loading
             m_loadedBundles++;
 
             if (m_loadedBundles == m_manifest.bundles.Length)
-            {
+            {   
                 StartCoroutine(GoToOut());
             }
         }
@@ -64,7 +67,7 @@ namespace EndlessGame.Modules.Loading
         {
             yield return new WaitForSeconds(loadingDelay);
 
-            loadingAnimator.SetTrigger(ANIMATOR_OUT_TRIGGER);
+            DOTween.Play(ANIMATION_ID_OUT);
 
             yield return new WaitForSeconds(outAnimDuration);
 
@@ -86,9 +89,9 @@ namespace EndlessGame.Modules.Loading
 
         private IEnumerator GoToMenu()
         {
-            loadingAnimator.SetTrigger(ANIMATOR_END_TRIGGER);
+            DOTween.Play(ANIMATION_ID_END);
 
-            yield return new WaitForSeconds(outAnimDuration);
+            yield return new WaitForSeconds(endAnimDuration);
 
             SceneManager.UnloadSceneAsync(0);
         }
