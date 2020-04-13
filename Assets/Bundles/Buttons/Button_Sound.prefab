@@ -87,7 +87,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56f8f59c7502b416085d6d928ac684a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  duration: 0
+  duration: 0.15
   ease: 6
   images: []
   colors:
