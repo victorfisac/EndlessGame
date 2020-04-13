@@ -221,7 +221,7 @@ Camera:
   field of view: 60
   orthographic: 1
   orthographic size: 5
-  m_Depth: 1
+  m_Depth: 2
   m_CullingMask:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -363,7 +363,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   delay: 0
-  duration: 0.01
+  duration: 0
   easeType: 6
   easeCurve:
     serializedVersion: 2
@@ -531,8 +531,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1744705429}
   - component: {fileID: 1744705428}
+  - component: {fileID: 1744705430}
   m_Layer: 0
-  m_Name: Frametime
+  m_Name: DontDestroyOnLoad
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -564,6 +565,14 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!81 &1744705430
+AudioListener:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1744705427}
+  m_Enabled: 1
 --- !u!1 &1905694034 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 616055141281592511, guid: 2c31075f729ec4d409075db2a2d2af3a,

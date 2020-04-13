@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace EndlessGame.Modules.Loading
+namespace EndlessGame.Modules.Screens
 {
     public class LoadingScreen : MonoBehaviour
     {
@@ -16,7 +16,7 @@ namespace EndlessGame.Modules.Loading
         [SerializeField]
         private float loadingDelay;
 
-        [Header("Animation")]
+        [Header("Animations")]
         [SerializeField]
         private float outAnimDuration;
         [SerializeField]
@@ -32,6 +32,7 @@ namespace EndlessGame.Modules.Loading
 
         private const string ANIMATION_ID_OUT = "Loading_Out";
         private const string ANIMATION_ID_END = "Loading_End";
+        private const string BACKGROUND_SCENE_NAME = "Background";
         private const string NEXT_SCENE_NAME = "Menu";
         private const string LOGO_CONTAINER_TAG = "Respawn";
 
@@ -71,7 +72,19 @@ namespace EndlessGame.Modules.Loading
 
             yield return new WaitForSeconds(outAnimDuration);
 
-            SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnMenuSceneLoaded;
+            SceneManager.LoadSceneAsync(BACKGROUND_SCENE_NAME, LoadSceneMode.Additive).completed += OnBackgroundSceneLoaded;
+        }
+
+        private void OnBackgroundSceneLoaded(AsyncOperation pOperation)
+        {
+            if (pOperation.isDone)
+            {
+                SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnMenuSceneLoaded;
+            }
+            else
+            {
+                Debug.LogErrorFormat("LoadingScreen: failed to load '{0}' scene.", NEXT_SCENE_NAME);
+            }
         }
 
         private void OnMenuSceneLoaded(AsyncOperation pOperation)
