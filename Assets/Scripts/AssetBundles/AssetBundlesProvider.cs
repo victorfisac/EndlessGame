@@ -38,6 +38,7 @@ namespace EndlessGame.AssetBundles
                 res.Dispose();
             });
 
+            _request.DisableCache = true;
             _request.Send();
         }
 
