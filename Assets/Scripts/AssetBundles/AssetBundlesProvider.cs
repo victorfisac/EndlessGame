@@ -4,7 +4,7 @@ using UnityEngine;
 using BestHTTP;
 
 
-namespace EndlessGame.Helpers
+namespace EndlessGame.AssetBundles
 {
     public class AssetBundlesProvider
     {
@@ -60,6 +60,8 @@ namespace EndlessGame.Helpers
                         if (op.isDone)
                         {
                             m_bundlesDict.Add(pAssetBundle, _bundleRequest.assetBundle);
+
+                            Debug.LogFormat("AssetBundlesProvider: loaded asset bundle '{0}' with success.", pAssetBundle);
 
                             if (pOnAssetBundleLoaded != null)
                                 pOnAssetBundleLoaded(_bundleRequest.assetBundle);

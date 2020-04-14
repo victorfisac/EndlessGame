@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 
-namespace EndlessGame.Helpers
+namespace EndlessGame.AssetBundles
 {
     public class AssetBundlesShaderFixer : MonoBehaviour
     {

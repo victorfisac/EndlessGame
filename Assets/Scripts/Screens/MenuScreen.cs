@@ -3,12 +3,12 @@
 
 using System.Collections;
 using DG.Tweening;
-using EndlessGame.Helpers;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-namespace EndlessGame.Modules.Screens
+
+namespace EndlesGame.Screens
 {
     public class MenuScreen : MonoBehaviour
     {
@@ -44,7 +44,7 @@ namespace EndlessGame.Modules.Screens
 
         private void OnRankingButtonPressed()
         {
-            // TODO: open ranking through Google Play Games service
+            // TODO_VICTOR: open ranking through Google Play Games service
         }
 
         private void OnGameSceneLoaded(AsyncOperation pOperation)

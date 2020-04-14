@@ -3,12 +3,12 @@
 
 using System.Collections;
 using DG.Tweening;
-using EndlessGame.Helpers;
+using EndlessGame.AssetBundles;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace EndlessGame.Modules.Screens
+namespace EndlesGame.Screens
 {
     public class LoadingScreen : MonoBehaviour
     {
