@@ -31,10 +31,15 @@ namespace EndlesGame.Screens
         [Header("References")]
         [SerializeField]
         private Text scoreText;
+        [SerializeField]
+        private Text bestScoreText;
+        [SerializeField]
+        private GameObject bestScoreCnt;
 
 
         private const float SCORE_ANIM_DELAY = 1f;
         private const string PLAYERPREFS_SCORE = "SCORE";
+        private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
         private const string ANIMATION_ID_OUT = "End_Out";
         private const string ANIMATION_ID_END = "End_End";
         private const string CURRENT_SCENE_NAME = "End";
@@ -59,6 +64,12 @@ namespace EndlesGame.Screens
             .OnUpdate(() => {
                 scoreText.text = _scoreCounter.ToString();
             });
+
+            int _bestScore = PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
+            bool _hasBestScore = (_bestScore > 0);
+            
+            bestScoreCnt.SetActive(_hasBestScore);
+            bestScoreText.text = (_hasBestScore ? _bestScore.ToString() : string.Empty);
         }
 
         private void OnRetryButtonPressed()
