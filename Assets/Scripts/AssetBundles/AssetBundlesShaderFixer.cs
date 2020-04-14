@@ -23,6 +23,21 @@ namespace EndlessGame.AssetBundles
 
                 _graphic.material.shader = Shader.Find(_graphic.material.shader.name);
             }
+
+            ParticleSystemRenderer[] _particles = GetComponentsInChildren<ParticleSystemRenderer>();
+
+            for (int i = 0, count = _particles.Length; i < count; i++)
+            {
+                ParticleSystemRenderer _particle = _particles[i];
+                
+                if (_particle.material == null)
+                    continue;
+                
+                if (_particle.material.shader == null)
+                    continue;
+
+                _particle.material.shader = Shader.Find(_particle.material.shader.name);
+            }
         }
         #endif
     }

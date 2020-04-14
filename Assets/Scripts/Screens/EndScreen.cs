@@ -37,6 +37,8 @@ namespace EndlesGame.Screens
         private GameObject bestScoreCnt;
 
 
+        private bool m_isBestScore = false;
+
         private const float SCORE_ANIM_DELAY = 1f;
         private const string PLAYERPREFS_SCORE = "SCORE";
         private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
@@ -45,6 +47,7 @@ namespace EndlesGame.Screens
         private const string CURRENT_SCENE_NAME = "End";
         private const string NEXT_SCENE_NAME = "Game";
         private const string MAIN_SCENE_NAME = "Main";
+        private const string CELEBRATION_SCENE_NAME = "Celebration";
 
 
         private void Awake()
@@ -66,10 +69,20 @@ namespace EndlesGame.Screens
             });
 
             int _bestScore = PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
-            bool _hasBestScore = (_bestScore > 0);
+            m_isBestScore = (_score > _bestScore);
             
-            bestScoreCnt.SetActive(_hasBestScore);
-            bestScoreText.text = (_hasBestScore ? _bestScore.ToString() : string.Empty);
+            if (m_isBestScore)
+            {
+                PlayerPrefs.SetInt(PLAYERPREFS_BEST_SCORE, _score);
+                
+                if (_bestScore > 0)
+                {
+                    bestScoreCnt.SetActive(m_isBestScore);
+                    bestScoreText.text = _bestScore.ToString();
+                }
+
+                SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive);
+            }
         }
 
         private void OnRetryButtonPressed()
@@ -114,6 +127,11 @@ namespace EndlesGame.Screens
             yield return new WaitForSeconds(outAnimDuration);
 
             SceneManager.UnloadSceneAsync(CURRENT_SCENE_NAME);
+
+            if (m_isBestScore)
+            {
+                SceneManager.UnloadSceneAsync(CELEBRATION_SCENE_NAME);
+            }
         }
 
         private IEnumerator GoToMenu()
