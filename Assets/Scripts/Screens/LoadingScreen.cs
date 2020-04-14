@@ -41,6 +41,11 @@ namespace EndlesGame.Screens
         {
             Application.targetFrameRate = 60;
 
+            AssetBundlesProvider.Instance.LoadVersionManifest(OnVersionManifestLoaded);
+        }
+
+        private void OnVersionManifestLoaded(VersionManifest pManifest)
+        {
             AssetBundlesProvider.Instance.LoadAssetBundlesManifest(OnAssetBundlesManifestLoaded);
         }
 

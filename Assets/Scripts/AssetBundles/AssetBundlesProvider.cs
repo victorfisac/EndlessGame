@@ -11,15 +11,52 @@ namespace EndlessGame.AssetBundles
         private static AssetBundlesProvider m_instance = null;
         private static object m_lock = new object();
 
-
+        private string m_subfolder = string.Empty;
         private Dictionary<string, AssetBundle> m_bundlesDict = new Dictionary<string, AssetBundle>();
 
         private const string BASE_URL = "https://www.victorfisac.com/files/endlessgame/";
 
 
+        public void LoadVersionManifest(Action<VersionManifest> pOnManifestLoaded)
+        {
+            string _uri = string.Concat(BASE_URL, "version.json");
+
+            HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
+                if (res.IsSuccess)
+                {
+                    VersionManifest _manifest = JsonUtility.FromJson<VersionManifest>(res.DataAsText);
+
+                    for (int i = 0, count = _manifest.versions.Length; i < count; i++)
+                    {
+                        VersionDefinition _version = _manifest.versions[i];
+
+                        if (_version.version.Equals(Application.version))
+                        {
+                            m_subfolder = _version.folder;
+                            break;
+                        }
+                    }
+
+                    if (pOnManifestLoaded != null)
+                        pOnManifestLoaded(_manifest);
+                }
+                else
+                {
+                    Debug.LogError("AssetBundlesProvider: failed to load asset bundles manifest.");
+                }
+
+                req.Dispose();
+                res.Dispose();
+            });
+
+            _request.DisableCache = true;
+            _request.Send();
+        }
+
+
         public void LoadAssetBundlesManifest(Action<LoadingManifest> pOnManifestLoaded)
         {
-            string _uri = string.Concat(BASE_URL, "manifest.json");
+            string _uri = string.Concat(BASE_URL, m_subfolder, "/manifest.json");
 
             HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
                 if (res.IsSuccess)
@@ -51,7 +88,7 @@ namespace EndlessGame.AssetBundles
                 return;
             }
 
-            string _uri = string.Concat(BASE_URL, pAssetBundle);
+            string _uri = string.Concat(BASE_URL, m_subfolder, "/", pAssetBundle);
             
             HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
                 if (res.IsSuccess)
@@ -122,4 +159,17 @@ namespace EndlessGame.AssetBundles
     {
         public string[] bundles;
     }
+
+    [SerializeField]
+    public class VersionManifest
+    {
+        public VersionDefinition[] versions;
+    }
+
+    [Serializable]
+        public class VersionDefinition
+        {
+            public string version;
+            public string folder;
+        }
 }
