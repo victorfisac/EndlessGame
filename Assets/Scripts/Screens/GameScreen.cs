@@ -67,10 +67,6 @@ namespace EndlesGame.Screens
                 countdownText.text = m_currentCount.ToString();
             }
 
-            countdownText.text = "GO!";
-
-            yield return new WaitForSeconds(countAnimDuration);
-
             countdownText.gameObject.SetActive(false);
 
             // TODO_VICTOR: enable gameplay manager
