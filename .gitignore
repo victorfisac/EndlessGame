@@ -62,3 +62,6 @@ crashlytics-build.properties
 # VS Code files
 .vscode/
 
+# Credentials files
+Assets/__LOCAL/
+Assets/__LOCAL.meta
