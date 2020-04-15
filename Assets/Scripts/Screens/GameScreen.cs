@@ -77,7 +77,7 @@ namespace EndlesGame.Screens
             #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
             #else
-            if ((Input.touchCount > 1) && (Input.touches[0].phase == TouchPhase.Began))
+            if ((Input.touchCount > 1))
             #endif
             {
                 OnGameplayEnd(720);
@@ -131,6 +131,11 @@ namespace EndlesGame.Screens
 
         private void OnGameplayEnd(int pScore)
         {
+            if (!pauseButton.interactable)
+            {
+                return;
+            }
+
             // TODO_VICTOR: disable gameplay manager
             
             PlayerPrefs.SetInt(PLAYERPREFS_SCORE, pScore);
