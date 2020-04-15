@@ -40,6 +40,7 @@ namespace EndlessGame.Screens
         private bool m_isBestScore = false;
 
         private const float SCORE_ANIM_DELAY = 1f;
+        private const float CELEBRATION_ANIM_DELAY = 0.5f;
         private const string PLAYERPREFS_SCORE = "SCORE";
         private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
         private const string ANIMATION_ID_OUT = "End_Out";
@@ -68,8 +69,14 @@ namespace EndlessGame.Screens
                 scoreText.text = _scoreCounter.ToString();
             });
 
-            int _bestScore = PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
-            m_isBestScore = true; // TODO_VICTOR: (_score > _bestScore);
+            int _bestScore = 0;
+
+            if (PlayerPrefs.HasKey(PLAYERPREFS_BEST_SCORE))
+            {
+                PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
+            }
+
+            m_isBestScore = true; // (_score > _bestScore);
             
             if (m_isBestScore)
             {
@@ -81,7 +88,7 @@ namespace EndlessGame.Screens
                     bestScoreText.text = _bestScore.ToString();
                 }
 
-                SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive);
+                StartCoroutine(OpenCelebration());
             }
         }
 
@@ -141,6 +148,13 @@ namespace EndlessGame.Screens
             yield return new WaitForSeconds(endAnimDuration);
 
             SceneManager.LoadSceneAsync(MAIN_SCENE_NAME, LoadSceneMode.Single);
+        }
+
+        private IEnumerator OpenCelebration()
+        {
+            yield return new WaitForSeconds(SCORE_ANIM_DELAY + scoreAnimDuration*0.75f);
+
+            SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive);
         }
     }
 }

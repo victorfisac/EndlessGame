@@ -33,6 +33,7 @@ namespace EndlessGame.Screens
         private const string ANIMATION_ID_OUT = "Loading_Out";
         private const string ANIMATION_ID_END = "Loading_End";
         private const string BACKGROUND_SCENE_NAME = "Background";
+        private const string CURRENT_SCENE_NAME = "Main";
         private const string NEXT_SCENE_NAME = "Menu";
         private const string LOGO_CONTAINER_TAG = "Respawn";
 
@@ -111,7 +112,7 @@ namespace EndlessGame.Screens
 
             yield return new WaitForSeconds(endAnimDuration);
 
-            SceneManager.UnloadSceneAsync(0);
+            SceneManager.UnloadSceneAsync(CURRENT_SCENE_NAME);
         }
 
         private void MoveLogoToMenuScene()

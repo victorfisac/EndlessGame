@@ -205,7 +205,7 @@ GameObject:
   m_Component:
   - component: {fileID: 749105899}
   - component: {fileID: 749105900}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -344,7 +344,7 @@ GameObject:
   - component: {fileID: 1333581156}
   - component: {fileID: 1333581155}
   - component: {fileID: 1333581154}
-  m_Layer: 5
+  m_Layer: 1
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -527,21 +527,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1206065013699054
-Transform:
+--- !u!224 &1206065013699054
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1206065013699053}
-  m_LocalRotation: {x: -0.46382394, y: 0.15559234, z: 0.18672776, w: 0.85193384}
-  m_LocalPosition: {x: -458.5981, y: -1064.9454, z: -214.90785}
+  m_LocalRotation: {x: -0.74200743, y: 0.25508052, z: 0.08035025, w: 0.6147379}
+  m_LocalPosition: {x: 0, y: 0, z: -214.90785}
   m_LocalScale: {x: 487.64856, y: 487.64865, z: 487.64856}
   m_Children:
   - {fileID: 1381478685384026}
   m_Father: {fileID: 749105899}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: -58.038002, y: 9.997001, z: 19.17}
+  m_LocalEulerAnglesHint: {x: -107.585, y: -40.044006, z: 67.81799}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 50, y: -100}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1260826389060512
 GameObject:
   m_ObjectHideFlags: 0
@@ -560,21 +565,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1260826389060513
-Transform:
+--- !u!224 &1260826389060513
+RectTransform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1260826389060512}
-  m_LocalRotation: {x: -0.49850997, y: -0.10786121, z: 0.038569737, w: 0.8592824}
-  m_LocalPosition: {x: 510.40628, y: -1064.9454, z: -214.90785}
-  m_LocalScale: {x: 487.64838, y: 487.64835, z: 487.64862}
+  m_LocalRotation: {x: -0.78026533, y: 0.08262555, z: 0.21583362, w: 0.581184}
+  m_LocalPosition: {x: 0, y: 0, z: -214.90785}
+  m_LocalScale: {x: 487.64856, y: 487.64865, z: 487.64856}
   m_Children:
   - {fileID: 4201156910010012}
   m_Father: {fileID: 749105899}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: -58.038002, y: -25.013, z: 19.17}
+  m_LocalEulerAnglesHint: {x: -109.503, y: 46.151993, z: -21.421997}
+  m_AnchorMin: {x: 1, y: 0}
+  m_AnchorMax: {x: 1, y: 0}
+  m_AnchoredPosition: {x: 0, y: -100}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1381478685384025
 GameObject:
   m_ObjectHideFlags: 0
@@ -653,7 +663,7 @@ ParticleSystem:
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
@@ -9573,7 +9583,7 @@ ParticleSystem:
   cullingMode: 3
   ringBufferMode: 0
   ringBufferLoopRange: {x: 0, y: 1}
-  looping: 1
+  looping: 0
   prewarm: 0
   playOnAwake: 1
   useUnscaledTime: 0
