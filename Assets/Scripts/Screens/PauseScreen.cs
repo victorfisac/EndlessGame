@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-namespace EndlesGame.Screens
+namespace EndlessGame.Screens
 {
     public class PauseScreen : MonoBehaviour
     {

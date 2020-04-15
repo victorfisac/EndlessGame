@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 
-namespace EndlesGame.Logo
+namespace EndlessGame.Logo
 {
     public class LogoBehaviour : MonoBehaviour
     {

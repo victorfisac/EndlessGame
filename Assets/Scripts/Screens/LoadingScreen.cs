@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 
-namespace EndlesGame.Screens
+namespace EndlessGame.Screens
 {
     public class LoadingScreen : MonoBehaviour
     {

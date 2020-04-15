@@ -9,7 +9,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-namespace EndlesGame.Screens
+namespace EndlessGame.Screens
 {
     public class GameScreen : MonoBehaviour
     {
@@ -77,7 +77,7 @@ namespace EndlesGame.Screens
             #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
             #else
-            if ((Input.touchCount > 1))
+            if (Input.GetKeyDown(KeyCode.Escape))
             #endif
             {
                 OnGameplayEnd(720);
