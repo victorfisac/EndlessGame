@@ -6,7 +6,15 @@ using BestHTTP;
 
 namespace EndlessGame.AssetBundles
 {
-    public class AssetBundlesProvider
+    public interface IAssetBundlesProvider
+    {
+        void LoadVersionManifest(Action<VersionManifest> pOnManifestLoaded);
+        void LoadAssetBundlesManifest(Action<LoadingManifest> pOnManifestLoaded);
+        void LoadAssetBundle(string pAssetBundle, Action<AssetBundle> pOnAssetBundleLoaded = null);
+    }
+
+
+    public class AssetBundlesProvider : IAssetBundlesProvider
     {
         private static AssetBundlesProvider m_instance = null;
         private static object m_lock = new object();
@@ -38,7 +46,9 @@ namespace EndlessGame.AssetBundles
                     }
 
                     if (pOnManifestLoaded != null)
+                    {
                         pOnManifestLoaded(_manifest);
+                    }
                 }
                 else
                 {
@@ -64,7 +74,9 @@ namespace EndlessGame.AssetBundles
                     LoadingManifest _manifest = JsonUtility.FromJson<LoadingManifest>(res.DataAsText);
 
                     if (pOnManifestLoaded != null)
+                    {
                         pOnManifestLoaded(_manifest);
+                    }
                 }
                 else
                 {
@@ -102,7 +114,9 @@ namespace EndlessGame.AssetBundles
                             Debug.LogFormat("AssetBundlesProvider: loaded asset bundle '{0}' with success.", pAssetBundle);
 
                             if (pOnAssetBundleLoaded != null)
+                            {
                                 pOnAssetBundleLoaded(_bundleRequest.assetBundle);
+                            }
                         }
                         else
                         {
@@ -120,23 +134,6 @@ namespace EndlessGame.AssetBundles
             });
 
             _request.Send();
-        }
-
-        public void GetAssetFromBundle<T>(string pAssetName, string pAssetBundle, Action<T> pOnAssetRetrieved = null) where T : UnityEngine.Object
-        {
-            if (!m_bundlesDict.ContainsKey(pAssetBundle))
-            {
-                Debug.LogErrorFormat("AssetBundlesProvider: failed to retrieve asset '{0}' from asset bundle '{1}'.", pAssetName, pAssetBundle);
-                return;
-            }
-
-            AssetBundle _assetBundle = m_bundlesDict[pAssetBundle];
-            AssetBundleRequest _request = _assetBundle.LoadAssetAsync(pAssetName);
-
-            _request.completed += (op) => {
-                if (pOnAssetRetrieved != null)
-                    pOnAssetRetrieved(_request.asset as T);
-            };
         }
 
 
