@@ -69,7 +69,7 @@ namespace EndlesGame.Screens
             });
 
             int _bestScore = PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
-            m_isBestScore = (_score > _bestScore);
+            m_isBestScore = true; // TODO_VICTOR: (_score > _bestScore);
             
             if (m_isBestScore)
             {

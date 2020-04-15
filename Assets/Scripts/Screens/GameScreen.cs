@@ -74,7 +74,11 @@ namespace EndlesGame.Screens
 
         private void Update()
         {
+            #if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.Space))
+            #else
+            if ((Input.touchCount > 1) && (Input.touches[0].phase == TouchPhase.Began))
+            #endif
             {
                 OnGameplayEnd(720);
             }
