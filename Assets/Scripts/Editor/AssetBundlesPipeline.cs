@@ -34,8 +34,6 @@ namespace EndlessGame.Editor
 
             GenerateAssetBundles();
             RetrieveVersionManifest();
-
-            m_client = null;
         }
 
         private static void GenerateAssetBundles()
