@@ -3,6 +3,7 @@
 
 using System.Collections;
 using DG.Tweening;
+using EndlessGame.Audio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -23,6 +24,8 @@ namespace EndlessGame.Screens
         private Button rankingButton;
 
 
+        private AudioManager m_audioManager = null;
+
         private const string ANIMATION_ID_OUT = "Menu_Out";
         private const string CURRENT_SCENE_NAME = "Menu";
         private const string NEXT_SCENE_NAME = "Game";
@@ -30,6 +33,7 @@ namespace EndlessGame.Screens
 
         private void Awake()
         {
+            m_audioManager = AudioManager.Instance;
             playButton.onClick.AddListener(OnPlayButtonPressed);
             rankingButton.onClick.AddListener(OnRankingButtonPressed);
         }
@@ -39,11 +43,15 @@ namespace EndlessGame.Screens
             playButton.interactable = false;
             rankingButton.interactable = false;
 
+            m_audioManager.Play(ClipType.GAME_START);
+
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnGameSceneLoaded;
         }
 
         private void OnRankingButtonPressed()
         {
+            m_audioManager.Play(ClipType.BUTTON_PRESSED);
+
             // TODO_VICTOR: open ranking through Google Play Games service
         }
 

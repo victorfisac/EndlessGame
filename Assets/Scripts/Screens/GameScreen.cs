@@ -3,6 +3,7 @@
 
 using System.Collections;
 using DG.Tweening;
+using EndlessGame.Audio;
 using EndlessGame.Components;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -37,6 +38,7 @@ namespace EndlessGame.Screens
 
 
         private int m_currentCount = 3;
+        private AudioManager m_audioManager = null;
 
         private const string ANIMATION_ID_COUNT = "Countdown";
         private const string ANIMATION_ID_PAUSE = "Game_Pause";
@@ -50,6 +52,7 @@ namespace EndlessGame.Screens
 
         private void Awake()
         {
+            m_audioManager = AudioManager.Instance;
             pauseButton.onClick.AddListener(OnPauseButtonPressed);
         }
 
@@ -61,6 +64,8 @@ namespace EndlessGame.Screens
 
             while (m_currentCount > 0)
             {
+                m_audioManager.Play(ClipType.GAMEPLAY_COUNTDOWN);
+                
                 yield return new WaitForSeconds(countAnimDuration);
 
                 m_currentCount--;
@@ -89,6 +94,8 @@ namespace EndlessGame.Screens
             pauseButton.interactable = false;
 
             // TODO_VICTOR: disable gameplay manager
+
+            m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
             blurredScreenshot.ShowBlurredBackground();
 
@@ -141,6 +148,8 @@ namespace EndlessGame.Screens
             PlayerPrefs.SetInt(PLAYERPREFS_SCORE, pScore);
 
             pauseButton.interactable = false;
+
+            m_audioManager.Play(ClipType.GAME_END);
 
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnEndSceneLoaded;
         }

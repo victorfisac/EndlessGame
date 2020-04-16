@@ -3,6 +3,7 @@
 
 using System.Collections;
 using DG.Tweening;
+using EndlessGame.Audio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +26,8 @@ namespace EndlessGame.Screens
         private Button exitButton;
 
 
+        private AudioManager m_audioManager = null;
+
         private const string ANIMATION_ID_OUT = "Pause_Out";
         private const string ANIMATION_ID_END = "Pause_End";
         private const string CURRENT_SCENE_NAME = "Pause";
@@ -33,6 +36,7 @@ namespace EndlessGame.Screens
 
         private void Awake()
         {
+            m_audioManager = AudioManager.Instance;
             continueButton.onClick.AddListener(OnContinueButtonPressed);
             exitButton.onClick.AddListener(OnExitButtonPressed);
         }
@@ -42,6 +46,8 @@ namespace EndlessGame.Screens
             continueButton.interactable = false;
             exitButton.interactable = false;
 
+            m_audioManager.Play(ClipType.BUTTON_PRESSED);
+
             StartCoroutine(GoToGame());
         }
 
@@ -49,6 +55,8 @@ namespace EndlessGame.Screens
         {
             continueButton.interactable = false;
             exitButton.interactable = false;
+
+            m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
             StartCoroutine(GoToMenu());
         }

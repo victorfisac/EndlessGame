@@ -3,6 +3,7 @@
 
 using System.Collections;
 using DG.Tweening;
+using EndlessGame.Audio;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -38,6 +39,7 @@ namespace EndlessGame.Screens
 
 
         private bool m_isBestScore = false;
+        private AudioManager m_audioManager = null;
 
         private const float SCORE_ANIM_DELAY = 1f;
         private const float CELEBRATION_ANIM_DELAY = 0.5f;
@@ -53,6 +55,7 @@ namespace EndlessGame.Screens
 
         private void Awake()
         {
+            m_audioManager = AudioManager.Instance;
             retryButton.onClick.AddListener(OnRetryButtonPressed);
             rankingButton.onClick.AddListener(OnRankingButtonPressed);
             exitButton.onClick.AddListener(OnExitButtonPressed);
@@ -98,11 +101,16 @@ namespace EndlessGame.Screens
             rankingButton.interactable = false;
             exitButton.interactable = false;
 
+            m_audioManager.Play(ClipType.GAME_START);
+
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnGameSceneLoaded;
         }
 
         private void OnRankingButtonPressed()
         {
+            m_audioManager.Play(ClipType.BUTTON_PRESSED);
+
+
             // TODO_VICTOR: open ranking through Google Play Games service
         }
 
@@ -111,6 +119,8 @@ namespace EndlessGame.Screens
             retryButton.interactable = false;
             rankingButton.interactable = false;
             exitButton.interactable = false;
+
+            m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
             StartCoroutine(GoToMenu());
         }
@@ -153,6 +163,8 @@ namespace EndlessGame.Screens
         private IEnumerator OpenCelebration()
         {
             yield return new WaitForSeconds(SCORE_ANIM_DELAY + scoreAnimDuration*0.75f);
+
+            m_audioManager.Play(ClipType.CELEBRATION);
 
             SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive);
         }
