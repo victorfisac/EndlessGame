@@ -38,6 +38,7 @@ namespace EndlessGame.Screens
         private GameObject bestScoreCnt;
 
 
+        private int m_score = 0;
         private bool m_isBestScore = false;
         private AudioManager m_audioManager = null;
 
@@ -63,35 +64,23 @@ namespace EndlessGame.Screens
 
         private void Start()
         {
-            int _score = PlayerPrefs.GetInt(PLAYERPREFS_SCORE);
-            int _scoreCounter = 0;
-
-            DOTween.To(() => { return _scoreCounter; }, (x) => { _scoreCounter = x; }, _score, scoreAnimDuration)
-            .SetDelay(SCORE_ANIM_DELAY)
-            .OnUpdate(() => {
-                scoreText.text = _scoreCounter.ToString();
-            });
-
-            int _bestScore = 0;
-
-            if (PlayerPrefs.HasKey(PLAYERPREFS_BEST_SCORE))
-            {
-                PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
-            }
-
-            m_isBestScore = true; // (_score > _bestScore);
+            m_score = PlayerPrefs.GetInt(PLAYERPREFS_SCORE);
             
+            AnimateScore();
+            CheckBestScore();
+
             if (m_isBestScore)
             {
-                PlayerPrefs.SetInt(PLAYERPREFS_BEST_SCORE, _score);
-                
-                if (_bestScore > 0)
-                {
-                    bestScoreCnt.SetActive(m_isBestScore);
-                    bestScoreText.text = _bestScore.ToString();
-                }
-
                 StartCoroutine(OpenCelebration());
+            }
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                this.enabled = false;
+                OnExitButtonPressed();
             }
         }
 
@@ -123,6 +112,40 @@ namespace EndlessGame.Screens
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
             StartCoroutine(GoToMenu());
+        }
+
+        private void AnimateScore()
+        {
+            int _scoreCounter = 0;
+
+            DOTween.To(() => { return _scoreCounter; }, (x) => { _scoreCounter = x; }, m_score, scoreAnimDuration)
+            .SetDelay(SCORE_ANIM_DELAY)
+            .OnUpdate(() => {
+                scoreText.text = _scoreCounter.ToString();
+            });
+        }
+
+        private void CheckBestScore()
+        {
+            int _bestScore = 0;
+
+            if (PlayerPrefs.HasKey(PLAYERPREFS_BEST_SCORE))
+            {
+                PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
+            }
+
+            m_isBestScore = (m_score > _bestScore);
+            
+            if (m_isBestScore)
+            {
+                PlayerPrefs.SetInt(PLAYERPREFS_BEST_SCORE, m_score);
+                
+                if (_bestScore > 0)
+                {
+                    bestScoreCnt.SetActive(m_isBestScore);
+                    bestScoreText.text = _bestScore.ToString();
+                }
+            }
         }
 
         private void OnGameSceneLoaded(AsyncOperation pOperation)

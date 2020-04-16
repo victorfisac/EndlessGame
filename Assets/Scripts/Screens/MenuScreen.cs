@@ -16,6 +16,8 @@ namespace EndlessGame.Screens
         [Header("Animations")]
         [SerializeField]
         private float outAnimDuration;
+        [SerializeField]
+        private float endAnimDuration;
 
         [Header("Buttons")]
         [SerializeField]
@@ -27,6 +29,7 @@ namespace EndlessGame.Screens
         private AudioManager m_audioManager = null;
 
         private const string ANIMATION_ID_OUT = "Menu_Out";
+        private const string ANIMATION_ID_END = "Menu_End";
         private const string CURRENT_SCENE_NAME = "Menu";
         private const string NEXT_SCENE_NAME = "Game";
 
@@ -36,6 +39,15 @@ namespace EndlessGame.Screens
             m_audioManager = AudioManager.Instance;
             playButton.onClick.AddListener(OnPlayButtonPressed);
             rankingButton.onClick.AddListener(OnRankingButtonPressed);
+        }
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                this.enabled = false;
+                StartCoroutine(GoToExit());
+            }
         }
 
         private void OnPlayButtonPressed()
@@ -74,6 +86,15 @@ namespace EndlessGame.Screens
             yield return new WaitForSeconds(outAnimDuration);
 
             SceneManager.UnloadSceneAsync(CURRENT_SCENE_NAME);
+        }
+
+        private IEnumerator GoToExit()
+        {
+            DOTween.Play(ANIMATION_ID_END);
+
+            yield return new WaitForSeconds(endAnimDuration);
+
+            Application.Quit();
         }
     }
 }

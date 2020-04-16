@@ -41,6 +41,15 @@ namespace EndlessGame.Screens
             exitButton.onClick.AddListener(OnExitButtonPressed);
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                this.enabled = false;
+                OnExitButtonPressed();
+            }
+        }
+
         private void OnContinueButtonPressed()
         {
             continueButton.interactable = false;
