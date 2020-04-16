@@ -1,0 +1,6 @@
+<linker>
+    <assembly fullname="UnityEngine">
+        <type fullname="UnityEngine.ParticleSystem" preserve="all"/>
+        <type fullname="UnityEngine.ParticleSystemRenderer" preserve="all"/>
+    </assembly>
+</linker>
