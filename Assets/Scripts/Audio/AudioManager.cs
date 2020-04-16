@@ -54,7 +54,7 @@ namespace EndlessGame.Audio
         {
             if (!m_initalized)
             {
-                Debug.LogErrorFormat("AudioManager: initialization is still not completed (skipping audio '{0}').", pType);
+                Debug.LogWarningFormat("AudioManager: initialization is still not completed (skipping audio '{0}').", pType);
                 return;
             }
 

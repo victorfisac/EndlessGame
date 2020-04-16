@@ -5,6 +5,7 @@ using System.Collections;
 using DG.Tweening;
 using EndlessGame.Audio;
 using EndlessGame.Components;
+using EndlessGame.Game;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -28,6 +29,10 @@ namespace EndlessGame.Screens
         [SerializeField]
         private float resumeAnimDuration;
 
+        [Header("Score")]
+        [SerializeField]
+        private Text m_scoreTxt;
+
         [Header("Buttons")]
         [SerializeField]
         private Button pauseButton;
@@ -35,6 +40,8 @@ namespace EndlessGame.Screens
         [Header("References")]
         [SerializeField]
         private BlurredScreenshotComponent blurredScreenshot;
+        [SerializeField]
+        private GameManager gameManager;
 
 
         private int m_currentCount = 3;
@@ -43,6 +50,7 @@ namespace EndlessGame.Screens
         private const string ANIMATION_ID_COUNT = "Countdown";
         private const string ANIMATION_ID_PAUSE = "Game_Pause";
         private const string ANIMATION_ID_OUT = "Game_Out";
+        private const string ANIMATION_ID_SCORE = "Score_High";
         private const string CURRENT_SCENE_NAME = "Game";
         private const string NEXT_SCENE_NAME = "End";
         private const string PAUSE_SCENE_NAME = "Pause";
@@ -54,6 +62,9 @@ namespace EndlessGame.Screens
         {
             m_audioManager = AudioManager.Instance;
             pauseButton.onClick.AddListener(OnPauseButtonPressed);
+
+            gameManager.OnGameplayEndCallback += OnGameplayEnd;
+            gameManager.OnBallCollisionCallback += OnBallCollision;
         }
 
         private IEnumerator Start()
@@ -74,26 +85,20 @@ namespace EndlessGame.Screens
 
             countdownText.gameObject.SetActive(false);
 
-            // TODO_VICTOR: enable gameplay manager
+            gameManager.StartGame();
         }
 
-        private void Update()
+        private void OnDestroy()
         {
-            #if UNITY_EDITOR
-            if (Input.GetKeyDown(KeyCode.Space))
-            #else
-            if (Input.GetKeyDown(KeyCode.Escape))
-            #endif
-            {
-                OnGameplayEnd(720);
-            }
+            gameManager.OnGameplayEndCallback -= OnGameplayEnd;
+            gameManager.OnBallCollisionCallback -= OnBallCollision;
         }
 
         private void OnPauseButtonPressed()
         {
             pauseButton.interactable = false;
 
-            // TODO_VICTOR: disable gameplay manager
+            gameManager.SetPause(true);
 
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
@@ -133,7 +138,7 @@ namespace EndlessGame.Screens
 
             yield return new WaitForSeconds(resumeAnimDuration);
 
-            // TODO_VICTOR: enable gameplay manager
+            gameManager.SetPause(false);
         }
 
         private void OnGameplayEnd(int pScore)
@@ -142,8 +147,6 @@ namespace EndlessGame.Screens
             {
                 return;
             }
-
-            // TODO_VICTOR: disable gameplay manager
             
             PlayerPrefs.SetInt(PLAYERPREFS_SCORE, pScore);
 
@@ -152,6 +155,13 @@ namespace EndlessGame.Screens
             m_audioManager.Play(ClipType.GAME_END);
 
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnEndSceneLoaded;
+        }
+
+        private void OnBallCollision(int pScore)
+        {
+            m_scoreTxt.text = pScore.ToString();
+
+            DOTween.Restart(ANIMATION_ID_SCORE);
         }
 
         private void OnEndSceneLoaded(AsyncOperation pOperation)
