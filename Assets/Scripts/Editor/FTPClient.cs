@@ -10,7 +10,6 @@ namespace EndlessGame.Editor
     {
         void UploadFile(string pRemoteFile, string pLocalFile);
         void UploadData(string pRemoteFile, byte[] pData);
-        void UploadDataAsync(string pRemoteFile, byte[] pData);
         void CreateDirectory(string pNewDirectory);
         string[] FetchDirectoryInfo(string pDirectory);
     }
@@ -94,40 +93,6 @@ namespace EndlessGame.Editor
                 try
                 {
                     m_ftpStream.Write(pData, 0, pData.Length);
-                }
-                catch (Exception e)
-                {
-                    Debug.LogErrorFormat("FTPClient [ERROR]: {0}.", e.ToString());
-                }
-
-                m_ftpStream.Close();
-                m_ftpRequest = null;
-            }
-            catch (Exception e)
-            {
-                Debug.LogErrorFormat("FTPClient [ERROR]: {0}.", e.ToString());
-            }
-
-            return;
-        }
-
-        public async void UploadDataAsync(string pRemoteFile, byte[] pData)
-        {
-            try
-            {
-                m_ftpRequest = (FtpWebRequest)FtpWebRequest.Create(m_host + "/" + pRemoteFile);
-                m_ftpRequest.Credentials = new NetworkCredential(m_user, m_pass);
-
-                m_ftpRequest.UseBinary = true;
-                m_ftpRequest.UsePassive = true;
-                m_ftpRequest.KeepAlive = true;
-                m_ftpRequest.Method = WebRequestMethods.Ftp.UploadFile;
-                
-                m_ftpStream = await m_ftpRequest.GetRequestStreamAsync();
-
-                try
-                {
-                    await m_ftpStream.WriteAsync(pData, 0, pData.Length);
                 }
                 catch (Exception e)
                 {

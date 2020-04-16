@@ -24,18 +24,36 @@ namespace EndlessGame.Editor
         private const string MANIFEST_PATH = "files/endlessgame/version.json";
         private const string FTP_BASE_PATH = "public_html/files/endlessgame/";
 
-
-        [MenuItem("Build/Asset Bundles")]
+        
         public static void BuildAssetBundles()
+        {
+            GenerateAssetBundles();
+        }
+
+
+        [MenuItem("Asset Bundles/Build and Play", false, 3)]
+        public static void BuildAndPlay()
         {
             HTTPManager.Setup();
 
             m_client = new FTPClient(CredentialsManager.FTP_HOST_IP, CredentialsManager.FTP_HOST_USERNAME, CredentialsManager.FTP_HOST_PASSWORD);
 
             GenerateAssetBundles();
-            RetrieveVersionManifest();
+            RetrieveVersionManifest(true);
         }
 
+        [MenuItem("Asset Bundles/Build and Upload", false, 2)]
+        public static void BuildAndUploadAssetBundles()
+        {
+            HTTPManager.Setup();
+
+            m_client = new FTPClient(CredentialsManager.FTP_HOST_IP, CredentialsManager.FTP_HOST_USERNAME, CredentialsManager.FTP_HOST_PASSWORD);
+
+            GenerateAssetBundles();
+            RetrieveVersionManifest(false);
+        }
+
+        [MenuItem("Asset Bundles/Build", false, 1)]
         private static void GenerateAssetBundles()
         {
             string outputPath = GetOutputDirectory();
@@ -56,7 +74,7 @@ namespace EndlessGame.Editor
             // Debug.LogFormat("AssetBundlesPipeline: generated asset bundles '{0}'.", string.Join(", ", m_bundlesToBuild));
         }
 
-        private static async void RetrieveVersionManifest()
+        private static async void RetrieveVersionManifest(bool pPlayOnFinish)
         {
             string _uri = string.Concat(CredentialsManager.MANIFEST_BASE_URL, MANIFEST_PATH);
             
@@ -91,7 +109,7 @@ namespace EndlessGame.Editor
             
             EditorUtility.DisplayProgressBar("", "", 0.9f);
 
-            UploadAssetBundlesManifest();
+            UploadAssetBundlesManifest(pPlayOnFinish);
 
             Directory.Delete(GetOutputDirectory(), true);
         }
@@ -163,7 +181,7 @@ namespace EndlessGame.Editor
             m_client.UploadData(_remotePath, _manifestData);
         }
 
-        private static async void UploadAssetBundlesManifest()
+        private static async void UploadAssetBundlesManifest(bool pPlayOnFinish)
         {
             EditorUtility.DisplayProgressBar("Asset Bundles Pipeline", "Uploading asset bundles manifest to server...", 0.25f);
 
@@ -181,11 +199,15 @@ namespace EndlessGame.Editor
             EditorUtility.DisplayProgressBar("Asset Bundles Pipeline", "Uploading asset bundles manifest to server...", 1f);
 
             await Task.Run(() => {
-                m_client.UploadDataAsync(_remotePath, _manifestData);
-                
+                m_client.UploadData(_remotePath, _manifestData);
             });
 
             EditorUtility.ClearProgressBar();
+
+            if (pPlayOnFinish)
+            {
+                EditorApplication.ExecuteMenuItem("Edit/Play");
+            }
         }
 
         private static void OnUploadProgress()
