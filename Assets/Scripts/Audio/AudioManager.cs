@@ -71,10 +71,13 @@ namespace EndlessGame.Audio
             {
                 _channel.Source.Play();
 
-                DOTween.To(() => 0, (x) => {}, 0, _channel.Source.clip.length).OnComplete(() => {
-                    _channel.Available = true;
-                    _channel.Source.clip = null;
-                });
+                if (!_data.Loop)
+                {
+                    DOTween.To(() => 0, (x) => {}, 0, _channel.Source.clip.length).OnComplete(() => {
+                        _channel.Available = true;
+                        _channel.Source.clip = null;
+                    });
+                }
             }
         }
 
