@@ -166,7 +166,16 @@ namespace EndlessGame.Screens
 
             m_audioManager.Play(ClipType.CELEBRATION);
 
-            SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive);
+            SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive).completed += (op) => {
+                if (op.isDone)
+                {
+                    Debug.LogFormat("EndScreen: loaded Celebration scene with success.");
+                }
+                else
+                {
+                    Debug.LogError("EndScreen: failed to load Celebration scene.");
+                }
+            };
         }
     }
 }
