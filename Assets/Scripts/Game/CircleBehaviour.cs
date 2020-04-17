@@ -27,11 +27,11 @@ namespace EndlessGame.Game
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.Rotate(0f, 0f, -m_rotateSpeed*10);
+                transform.Rotate(0f, 0f, m_rotateSpeed*10);
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.Rotate(0f, 0f, m_rotateSpeed*10);
+                transform.Rotate(0f, 0f, -m_rotateSpeed*10);
             }
         }
         #endif
