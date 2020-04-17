@@ -46,6 +46,7 @@ namespace EndlessGame.Audio
                 else
                 {
                     PlayerPrefs.SetInt(PLAYERPREFS_SOUND, 1);
+                    PlayerPrefs.Save();
                 }
             }
         }

@@ -149,6 +149,7 @@ namespace EndlessGame.Screens
             }
             
             PlayerPrefs.SetInt(PLAYERPREFS_SCORE, pScore);
+            PlayerPrefs.Save();
 
             pauseButton.interactable = false;
 

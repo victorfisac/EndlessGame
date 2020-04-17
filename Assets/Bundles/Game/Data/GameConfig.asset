@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f601c9e096a72e4489b5e085f4d4cf27, type: 3}
   m_Name: GameConfig
   m_EditorClassIdentifier: 
-  CircleSpeed: 2
+  CircleSpeed: 0.25
   BallSpeed: 225
   BallSpeedFactor: 10
   Colors:

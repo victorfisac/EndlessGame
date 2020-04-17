@@ -139,6 +139,7 @@ namespace EndlessGame.Screens
             if (m_isBestScore)
             {
                 PlayerPrefs.SetInt(PLAYERPREFS_BEST_SCORE, m_score);
+                PlayerPrefs.Save();
                 
                 if (_bestScore > 0)
                 {

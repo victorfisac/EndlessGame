@@ -20,18 +20,18 @@ namespace EndlessGame.Game
             }
 
             Vector2 _deltaPos = Input.GetTouch(0).deltaPosition;
-            transform.Rotate(0f, 0f, -_deltaPos.x*rotateSpeed);
+            transform.Rotate(0f, 0f, -_deltaPos.x*m_rotateSpeed);
         }
         #else
         private void Update()
         {
             if (Input.GetKey(KeyCode.RightArrow))
             {
-                transform.Rotate(0f, 0f, -m_rotateSpeed);
+                transform.Rotate(0f, 0f, -m_rotateSpeed*10);
             }
             else if (Input.GetKey(KeyCode.LeftArrow))
             {
-                transform.Rotate(0f, 0f, m_rotateSpeed);
+                transform.Rotate(0f, 0f, m_rotateSpeed*10);
             }
         }
         #endif
