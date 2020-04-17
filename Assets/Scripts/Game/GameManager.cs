@@ -73,7 +73,7 @@ namespace EndlessGame.Game
         {
             int _closestIndex = GetClosestIndex();
 
-            bool _sameColor = (ball.Color.Equals(gameConfig.Colors[_closestIndex]));
+            bool _sameColor = (ball.Color.Equals(m_currentColors[_closestIndex]));
 
             if (_sameColor)
             {
