@@ -563,7 +563,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: SWAP <color=yellow>LEFT</color>/<color=cyan>RIGHT</color> TO ROTATE
+  m_Text: DRAG <color=yellow>LEFT</color>/<color=cyan>RIGHT</color> TO ROTATE
 --- !u!222 &215194635
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2729,6 +2729,7 @@ MonoBehaviour:
   countAnimDelay: 1
   outAnimDuration: 0.5
   resumeAnimDuration: 0.25
+  animGameplayEndDuration: 1
   m_scoreTxt: {fileID: 392091448}
   pauseButton: {fileID: 420625655}
   blurredScreenshot: {fileID: 679432057}
