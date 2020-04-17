@@ -28,6 +28,8 @@ namespace EndlessGame.Screens
         private float outAnimDuration;
         [SerializeField]
         private float resumeAnimDuration;
+        [SerializeField]
+        private float animGameplayEndDuration;
 
         [Header("Score")]
         [SerializeField]
@@ -141,6 +143,13 @@ namespace EndlessGame.Screens
             gameManager.SetPause(false);
         }
 
+        private void OnBallCollision(int pScore)
+        {
+            m_scoreTxt.text = pScore.ToString();
+
+            DOTween.Restart(ANIMATION_ID_SCORE);
+        }
+
         private void OnGameplayEnd(int pScore)
         {
             if (!pauseButton.interactable)
@@ -155,14 +164,14 @@ namespace EndlessGame.Screens
 
             m_audioManager.Play(ClipType.GAME_END);
 
-            SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnEndSceneLoaded;
+            StartCoroutine(GameplayEndAnimation());
         }
 
-        private void OnBallCollision(int pScore)
+        private IEnumerator GameplayEndAnimation()
         {
-            m_scoreTxt.text = pScore.ToString();
+            yield return new WaitForSeconds(animGameplayEndDuration);
 
-            DOTween.Restart(ANIMATION_ID_SCORE);
+            SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnEndSceneLoaded;
         }
 
         private void OnEndSceneLoaded(AsyncOperation pOperation)
