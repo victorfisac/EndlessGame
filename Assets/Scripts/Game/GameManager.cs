@@ -2,6 +2,7 @@
 
 
 using System.Collections.Generic;
+using EndlessGame.Audio;
 using UnityEngine;
 
 
@@ -34,12 +35,14 @@ namespace EndlessGame.Game
         private Color[] m_currentColors = null;
         private int m_score = 0;
         private List<CircleSlice> m_instances = new List<CircleSlice>();
+        private AudioManager m_audioManager = null;
         private OnScoreEvent m_onBallCollisionCallback = null;
         private OnScoreEvent m_onGameplayEndCallback = null;
 
 
         private void Awake()
         {
+            m_audioManager = AudioManager.Instance;
             m_colorsCount = gameConfig.InitColors;
             ball.OnBallCollisionCallback += OnBallCollision;
             
@@ -81,6 +84,8 @@ namespace EndlessGame.Game
 
                 IncreaseDifficulty();
                 SetRandomBallColor();
+
+                m_audioManager.Play(ClipType.GAMEPLAY_COLLISION);
 
                 if (m_onBallCollisionCallback != null)
                 {
