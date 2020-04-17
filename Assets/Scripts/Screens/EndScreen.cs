@@ -119,7 +119,13 @@ namespace EndlessGame.Screens
             int _scoreCounter = 0;
 
             DOTween.To(() => { return _scoreCounter; }, (x) => { _scoreCounter = x; }, m_score, scoreAnimDuration)
-            .SetDelay(SCORE_ANIM_DELAY)
+            .SetDelay(SCORE_ANIM_DELAY).
+            OnPlay(() => {
+                if (m_score > 5)
+                {
+                    m_audioManager.Play(ClipType.GAMEPLAY_SCORING);
+                }
+            })
             .OnUpdate(() => {
                 scoreText.text = _scoreCounter.ToString();
             });
@@ -131,7 +137,13 @@ namespace EndlessGame.Screens
 
             if (PlayerPrefs.HasKey(PLAYERPREFS_BEST_SCORE))
             {
-                PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
+                _bestScore = PlayerPrefs.GetInt(PLAYERPREFS_BEST_SCORE);
+            }
+
+            if (_bestScore > 0)
+            {
+                bestScoreCnt.SetActive(m_isBestScore);
+                bestScoreText.text = _bestScore.ToString();
             }
 
             m_isBestScore = (m_score > _bestScore);
@@ -140,12 +152,6 @@ namespace EndlessGame.Screens
             {
                 PlayerPrefs.SetInt(PLAYERPREFS_BEST_SCORE, m_score);
                 PlayerPrefs.Save();
-                
-                if (_bestScore > 0)
-                {
-                    bestScoreCnt.SetActive(m_isBestScore);
-                    bestScoreText.text = _bestScore.ToString();
-                }
             }
         }
 
