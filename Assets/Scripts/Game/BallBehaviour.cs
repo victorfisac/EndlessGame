@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 0649
 
 
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -29,14 +30,16 @@ namespace EndlessGame.Game
         private bool m_movement = false;
         private Vector2 m_direction = new Vector2(0f, 0f);
         private OnBallCollision m_onBallCollisionCallback = null;
+        private bool m_detect = true;
 
         private const float DIRECTION_INIT_VALUE = 0.75f;
+        private const float DETECTION_DELAY_TIME = 0.15f;
 
 
         private void Awake()
         {
-            int _randomX = Random.Range(0, 1);
-            int _randomY = Random.Range(0, 1);
+            int _randomX = Random.Range(0, 2);
+            int _randomY = Random.Range(0, 2);
 
             m_direction.x = ((_randomX == 1) ? DIRECTION_INIT_VALUE : -DIRECTION_INIT_VALUE);
             m_direction.y = ((_randomX == 1) ? DIRECTION_INIT_VALUE : -DIRECTION_INIT_VALUE);
@@ -54,11 +57,18 @@ namespace EndlessGame.Game
             _position += m_direction*m_speed*Time.deltaTime;
             rectTrans.anchoredPosition = _position;
 
+            if (!m_detect)
+            {
+                return;
+            }
+
             float _distance = Vector2.Distance(_position, Vector2.zero);
 
             if (_distance > m_circleRadius)
             {
                 ChangeDirection();
+
+                ResetDetectWithDelay();
                 
                 if (m_onBallCollisionCallback != null)
                 {
@@ -72,6 +82,15 @@ namespace EndlessGame.Game
             Vector2 _random = new Vector2(Random.Range(-deltaAngle, deltaAngle), Random.Range(-deltaAngle, deltaAngle));
             m_direction = _random - rectTrans.anchoredPosition;
             m_direction.Normalize();
+        }
+
+        private void ResetDetectWithDelay()
+        {
+            m_detect = false;
+
+            DOTween.To(() => 0, (x) => {}, 0, DETECTION_DELAY_TIME).OnComplete(() => {
+                m_detect = true;
+            });
         }
 
 
