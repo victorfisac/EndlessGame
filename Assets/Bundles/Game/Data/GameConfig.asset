@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: GameConfig
   m_EditorClassIdentifier: 
   CircleSpeed: 0.25
-  BallSpeed: 225
-  BallSpeedFactor: 10
+  BallSpeed: 230
+  BallSpeedFactor: 12.5
   Colors:
   - {r: 1, g: 0.15686275, b: 0.62352943, a: 1}
   - {r: 0.9803922, g: 0.9803922, b: 0, a: 1}
