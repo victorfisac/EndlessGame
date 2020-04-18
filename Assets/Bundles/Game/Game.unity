@@ -993,7 +993,7 @@ MonoBehaviour:
   onTweenCreated:
     m_PersistentCalls:
       m_Calls: []
-  delay: 1.3
+  delay: 4.5
   duration: 0.15
   easeType: 6
   easeCurve:
