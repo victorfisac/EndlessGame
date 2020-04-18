@@ -4,6 +4,8 @@
 	{
 		[PerRendererData] _MainTex ("Sprite Texture", 2D) = "white" {}
 		_Color ("Tint", Color) = (1,1,1,1)
+		_SpeedX("Speed X", float) = 0
+		_SpeedY("Speed Y", float) = 0
 		
 		_StencilComp ("Stencil Comparison", Float) = 8
 		_Stencil ("Stencil ID", Float) = 0
@@ -64,6 +66,8 @@
                 };
                 
                 fixed4 _Color;
+				float _SpeedX;
+				float _SpeedY;
 
                 v2f vert(appdata_t IN)
                 {
@@ -83,7 +87,7 @@
 
                 fixed4 frag(v2f IN) : SV_Target
                 {
-                    half4 color = tex2D(_MainTex, IN.texcoord)*IN.color;
+                    half4 color = tex2D(_MainTex, IN.texcoord + float2(_SpeedX*_Time.x, _SpeedY*_Time.y/2.0))*IN.color;
                     clip (color.a - 0.01);
                     
                     float4 final;          
