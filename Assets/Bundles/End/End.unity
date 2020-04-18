@@ -731,6 +731,18 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 168343363}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &168343365 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5317065351951619762, guid: 222382a5f28eb0b4cba97578cc4a9bd3,
+    type: 3}
+  m_PrefabInstance: {fileID: 168343363}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8420261911ad3454794ecf2cae64bae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2070,6 +2082,7 @@ MonoBehaviour:
   retryButton: {fileID: 3327991149642098682}
   rankingButton: {fileID: 648801123}
   exitButton: {fileID: 2013977410}
+  shareButton: {fileID: 168343365}
   scoreText: {fileID: 1708232739}
   bestScoreText: {fileID: 1496384456}
   bestScoreCnt: {fileID: 904275247}

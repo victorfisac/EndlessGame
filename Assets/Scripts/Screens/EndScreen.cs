@@ -28,6 +28,8 @@ namespace EndlessGame.Screens
         private Button rankingButton;
         [SerializeField]
         private Button exitButton;
+        [SerializeField]
+        private Button shareButton;
 
         [Header("References")]
         [SerializeField]
@@ -52,14 +54,17 @@ namespace EndlessGame.Screens
         private const string NEXT_SCENE_NAME = "Game";
         private const string MAIN_SCENE_NAME = "Main";
         private const string CELEBRATION_SCENE_NAME = "Celebration";
+        private const string SHARE_SCENE_NAME = "Share";
 
 
         private void Awake()
         {
             m_audioManager = AudioManager.Instance;
+            
             retryButton.onClick.AddListener(OnRetryButtonPressed);
             rankingButton.onClick.AddListener(OnRankingButtonPressed);
             exitButton.onClick.AddListener(OnExitButtonPressed);
+            shareButton.onClick.AddListener(OnShareButtonPressed);
         }
 
         private void Start()
@@ -99,7 +104,6 @@ namespace EndlessGame.Screens
         {
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
-
             // TODO_VICTOR: open ranking through Google Play Games service
         }
 
@@ -112,6 +116,25 @@ namespace EndlessGame.Screens
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
             StartCoroutine(GoToMenu());
+        }
+
+        private void OnShareButtonPressed()
+        {
+            shareButton.interactable = false;
+
+            SceneManager.LoadSceneAsync(SHARE_SCENE_NAME, LoadSceneMode.Additive).completed += OnShareSceneLoaded;
+        }
+
+        private void OnShareSceneLoaded(AsyncOperation pOperation)
+        {
+            if (pOperation.isDone)
+            {
+                shareButton.interactable = true;
+            }
+            else
+            {
+                Debug.LogErrorFormat("LoadingScreen: failed to load '{0}' scene.", SHARE_SCENE_NAME);
+            }
         }
 
         private void AnimateScore()
@@ -196,16 +219,7 @@ namespace EndlessGame.Screens
 
             m_audioManager.Play(ClipType.CELEBRATION);
 
-            SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive).completed += (op) => {
-                if (op.isDone)
-                {
-                    Debug.LogFormat("EndScreen: loaded Celebration scene with success.");
-                }
-                else
-                {
-                    Debug.LogError("EndScreen: failed to load Celebration scene.");
-                }
-            };
+            SceneManager.LoadSceneAsync(CELEBRATION_SCENE_NAME, LoadSceneMode.Additive);
         }
     }
 }
