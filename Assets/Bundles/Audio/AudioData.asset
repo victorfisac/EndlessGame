@@ -16,32 +16,32 @@ MonoBehaviour:
   - Type: 0
     Clip: {fileID: 8300000, guid: fd96b5a04a473764caeb30e12ebd3a24, type: 3}
     Loop: 0
-    Volume: 1
+    Volume: 0.35
   - Type: 1
     Clip: {fileID: 8300000, guid: 497b8d2a3b7606e4aa38c787674106ee, type: 3}
     Loop: 0
-    Volume: 1
+    Volume: 0.4
   - Type: 2
     Clip: {fileID: 8300000, guid: 9bb4b89381759b44e8f7d69a783f5fea, type: 3}
     Loop: 0
-    Volume: 1
+    Volume: 0.35
   - Type: 3
     Clip: {fileID: 8300000, guid: 51777aa0a176dbf428149b8cc05dd3a1, type: 3}
     Loop: 0
-    Volume: 1
+    Volume: 0.4
   - Type: 4
     Clip: {fileID: 8300000, guid: e1b9a65b7f7a61f45ad5019686722d0b, type: 3}
     Loop: 0
-    Volume: 1
+    Volume: 0.675
   - Type: -1
     Clip: {fileID: 8300000, guid: c8fc737ca284e504fb2bf8337ab01f74, type: 3}
     Loop: 1
-    Volume: 0.0125
+    Volume: 0.05
   - Type: 5
     Clip: {fileID: 8300000, guid: eec300a37efcb53459f6e1f4ebffcfee, type: 3}
     Loop: 0
-    Volume: 1
+    Volume: 0.35
   - Type: 6
     Clip: {fileID: 8300000, guid: 25476ee77e6a62247855982c9f6d641e, type: 3}
     Loop: 0
-    Volume: 1
+    Volume: 0.5
