@@ -15,6 +15,10 @@ namespace EndlessGame.Screens
     {
         [Header("Settings")]
         [SerializeField]
+        private string shareTitle;
+        [SerializeField]
+        private string shareSubject;
+        [SerializeField]
         private string shareMessage;
 
         [Header("Bounds")]
@@ -30,6 +34,7 @@ namespace EndlessGame.Screens
 
         private const string CURRENT_SCENE_NAME = "Share";
         private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
+        private const string SHARE_IMAGE_FILENAME = "/share_image.png";
 
 
         private void Awake()
@@ -48,8 +53,7 @@ namespace EndlessGame.Screens
 
             RenderTextureAndSave();
 
-            string _message = string.Format(shareMessage, scoreText.text, GetDownloadLink());
-            SharePlugin.ShareDialog(_message);
+            OpenShareDialog();
 
             SceneManager.UnloadSceneAsync(CURRENT_SCENE_NAME);
         }
@@ -62,12 +66,26 @@ namespace EndlessGame.Screens
             _renderTex.ReadPixels(_screenRect, 0, 0);
             
             byte[] _pixels = _renderTex.EncodeToPNG();
-            string _savePath = Path.Combine(Application.persistentDataPath, SharePlugin.SHARE_IMAGE_FILENAME);
+            string _savePath = string.Concat(Application.persistentDataPath, SHARE_IMAGE_FILENAME);
 
             File.WriteAllBytes(_savePath, _pixels);
             Destroy(_renderTex);
 
             gameObject.SetActive(false);
+        }
+
+        private void OpenShareDialog()
+        {
+            string _message = string.Format(shareMessage, scoreText.text, GetDownloadLink());
+            string _filePath = string.Concat(Application.persistentDataPath, SHARE_IMAGE_FILENAME);
+
+            NativeShare _share = new NativeShare();
+            _share.SetTitle(shareTitle);
+            _share.SetSubject(shareSubject);
+            _share.SetText(_message);
+            _share.AddFile(_filePath);
+
+            _share.Share();
         }
 
         private Rect BoundsToScreenSpace()
