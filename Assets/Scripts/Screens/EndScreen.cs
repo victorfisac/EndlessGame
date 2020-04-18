@@ -142,7 +142,7 @@ namespace EndlessGame.Screens
 
             if (_bestScore > 0)
             {
-                bestScoreCnt.SetActive(m_isBestScore);
+                bestScoreCnt.SetActive(true);
                 bestScoreText.text = _bestScore.ToString();
             }
 
