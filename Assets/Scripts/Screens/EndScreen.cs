@@ -28,8 +28,6 @@ namespace EndlessGame.Screens
         private Button rankingButton;
         [SerializeField]
         private Button exitButton;
-        [SerializeField]
-        private Button shareButton;
 
         [Header("References")]
         [SerializeField]
@@ -45,7 +43,6 @@ namespace EndlessGame.Screens
         private AudioManager m_audioManager = null;
 
         private const float SCORE_ANIM_DELAY = 1f;
-        private const float CELEBRATION_ANIM_DELAY = 0.5f;
         private const string PLAYERPREFS_SCORE = "SCORE";
         private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
         private const string ANIMATION_ID_OUT = "End_Out";
@@ -54,7 +51,6 @@ namespace EndlessGame.Screens
         private const string NEXT_SCENE_NAME = "Game";
         private const string MAIN_SCENE_NAME = "Main";
         private const string CELEBRATION_SCENE_NAME = "Celebration";
-        private const string SHARE_SCENE_NAME = "Share";
 
 
         private void Awake()
@@ -64,7 +60,6 @@ namespace EndlessGame.Screens
             retryButton.onClick.AddListener(OnRetryButtonPressed);
             rankingButton.onClick.AddListener(OnRankingButtonPressed);
             exitButton.onClick.AddListener(OnExitButtonPressed);
-            shareButton.onClick.AddListener(OnShareButtonPressed);
         }
 
         private void Start()
@@ -116,25 +111,6 @@ namespace EndlessGame.Screens
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
             StartCoroutine(GoToMenu());
-        }
-
-        private void OnShareButtonPressed()
-        {
-            shareButton.interactable = false;
-
-            SceneManager.LoadSceneAsync(SHARE_SCENE_NAME, LoadSceneMode.Additive).completed += OnShareSceneLoaded;
-        }
-
-        private void OnShareSceneLoaded(AsyncOperation pOperation)
-        {
-            if (pOperation.isDone)
-            {
-                shareButton.interactable = true;
-            }
-            else
-            {
-                Debug.LogErrorFormat("LoadingScreen: failed to load '{0}' scene.", SHARE_SCENE_NAME);
-            }
         }
 
         private void AnimateScore()

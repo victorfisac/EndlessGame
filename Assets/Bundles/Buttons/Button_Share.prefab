@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 428387216920665743}
   - component: {fileID: 6231583687677234667}
   - component: {fileID: 5317065351951619762}
+  - component: {fileID: 6037916535363709081}
   m_Layer: 5
   m_Name: Button_Share
   m_TagString: Untagged
@@ -144,3 +145,19 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!114 &6037916535363709081
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8818528470524671475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8de23cda87666554e8943510191f294e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shareTitle: Share your high score
+  shareSubject: I challenge you to beat my score in Color Pong!
+  shareMessage: Hey, I scored {0} in Color Pong! Can you beat me? Play here {1}
+  button: {fileID: 5317065351951619762}

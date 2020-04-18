@@ -10,171 +10,199 @@ namespace EndlessGame.Plugins
 {
 	public class NativeShare
 	{
-	#if !UNITY_EDITOR && UNITY_ANDROID
+		#if !UNITY_EDITOR && UNITY_ANDROID
 		private static AndroidJavaClass m_ajc = null;
-		private static AndroidJavaClass AJC
-		{
-			get
-			{
-				if( m_ajc == null )
-					m_ajc = new AndroidJavaClass( "com.yasirkula.unity.NativeShare" );
-
-				return m_ajc;
-			}
-		}
-
 		private static AndroidJavaObject m_context = null;
-		private static AndroidJavaObject Context
-		{
-			get
-			{
-				if( m_context == null )
-				{
-					using( AndroidJavaObject unityClass = new AndroidJavaClass( "com.unity3d.player.UnityPlayer" ) )
-					{
-						m_context = unityClass.GetStatic<AndroidJavaObject>( "currentActivity" );
-					}
-				}
+		#endif
 
-				return m_context;
-			}
-		}
-	#endif
 
-		private string subject;
-		private string text;
-		private string title;
+		private string m_title;
+		private string m_subject;
+		private string m_text;
+		private string m_targetPackage;
+		private string m_targetClass;
+		private List<string> m_files;
+		private List<string> m_mimes;
 
-		private string targetPackage;
-		private string targetClass;
-
-		private List<string> files;
-		private List<string> mimes;
 
 		public NativeShare()
 		{
-			subject = string.Empty;
-			text = string.Empty;
-			title = string.Empty;
+			m_subject = string.Empty;
+			m_text = string.Empty;
+			m_title = string.Empty;
 
-			targetPackage = string.Empty;
-			targetClass = string.Empty;
+			m_targetPackage = string.Empty;
+			m_targetClass = string.Empty;
 
-			files = new List<string>( 0 );
-			mimes = new List<string>( 0 );
+			m_files = new List<string>(0);
+			m_mimes = new List<string>(0);
 		}
 
-		public NativeShare SetSubject( string subject )
+		public NativeShare SetSubject(string pSubject)
 		{
-			if( subject != null )
-				this.subject = subject;
-
-			return this;
-		}
-
-		public NativeShare SetText( string text )
-		{
-			if( text != null )
-				this.text = text;
-
-			return this;
-		}
-
-		public NativeShare SetTitle( string title )
-		{
-			if( title != null )
-				this.title = title;
-
-			return this;
-		}
-
-		public NativeShare SetTarget( string androidPackageName, string androidClassName = null )
-		{
-			if( !string.IsNullOrEmpty( androidPackageName ) )
+			if (pSubject != null)
 			{
-				targetPackage = androidPackageName;
-
-				if( androidClassName != null )
-					targetClass = androidClassName;
+				this.m_subject = pSubject;
 			}
 
 			return this;
 		}
 
-		public NativeShare AddFile( string filePath, string mime = null )
+		public NativeShare SetText(string pText)
 		{
-			if( !string.IsNullOrEmpty( filePath ) && File.Exists( filePath ) )
+			if (pText != null)
 			{
-				files.Add( filePath );
-				mimes.Add( mime ?? string.Empty );
+				this.m_text = pText;
+			}
+
+			return this;
+		}
+
+		public NativeShare SetTitle(string pTitle)
+		{
+			if (pTitle != null)
+			{
+				this.m_title = pTitle;
+			}
+
+			return this;
+		}
+
+		public NativeShare SetTarget(string pAndroidPackageName, string pAndroidClassName = null)
+		{
+			if (!string.IsNullOrEmpty(pAndroidPackageName))
+			{
+				m_targetPackage = pAndroidPackageName;
+
+				if (pAndroidClassName != null)
+				{
+					m_targetClass = pAndroidClassName;
+				}
+			}
+
+			return this;
+		}
+
+		public NativeShare AddFile(string pFilePath, string mime = null)
+		{
+			if (!string.IsNullOrEmpty(pFilePath) && File.Exists(pFilePath))
+			{
+				m_files.Add(pFilePath);
+				m_mimes.Add(mime ?? string.Empty);
 			}
 			else
-				Debug.LogError( "File does not exist at path or permission denied: " + filePath );
+			{
+				Debug.LogErrorFormat("NativeShare: file does not exist at path or permission denied: {0}.", pFilePath);
+			}
 
 			return this;
 		}
 
 		public void Share()
 		{
-			if( files.Count == 0 && subject.Length == 0 && text.Length == 0 )
+			if ((m_files.Count == 0) && (m_subject.Length == 0) && (m_text.Length == 0))
 			{
-				Debug.LogWarning( "Share Error: attempting to share nothing!" );
+				Debug.LogWarning("NativeShare: parameters are not configured properly.");
 				return;
 			}
 
-	#if UNITY_EDITOR
-			Debug.Log( "Shared!" );
-	#elif UNITY_ANDROID
-			AJC.CallStatic( "Share", Context, targetPackage, targetClass, files.ToArray(), mimes.ToArray(), subject, text, title );
-	#else
-			Debug.Log( "No sharing set up for this platform." );
-	#endif
+			#if UNITY_EDITOR
+			Debug.Log("NativeShare: opening native shared dialog.");
+			#elif UNITY_ANDROID
+			AJC.CallStatic("Share", Context, m_targetPackage, m_targetClass, m_files.ToArray(), m_mimes.ToArray(), m_subject, m_text, m_title);
+			#else
+			Debug.Log("NativeShare: platform not supported.");
+			#endif
 		}
 
-		#region Utility Functions
-		public static bool TargetExists( string androidPackageName, string androidClassName = null )
+		public static bool TargetExists(string pAndroidPackageName, string pAndroidClassName = null)
 		{
-	#if !UNITY_EDITOR && UNITY_ANDROID
-			if( string.IsNullOrEmpty( androidPackageName ) )
+			#if !UNITY_EDITOR && UNITY_ANDROID
+			if (string.IsNullOrEmpty(pAndroidPackageName))
+			{
 				return false;
+			}
 
-			if( androidClassName == null )
-				androidClassName = string.Empty;
+			if (pAndroidClassName == null)
+			{
+				pAndroidClassName = string.Empty;
+			}
 
-			return AJC.CallStatic<bool>( "TargetExists", Context, androidPackageName, androidClassName );
-	#else
+			return AJC.CallStatic<bool>("TargetExists", Context, pAndroidPackageName, pAndroidClassName);
+			#else
 			return true;
-	#endif
+			#endif
 		}
 
-		public static bool FindTarget( out string androidPackageName, out string androidClassName, string packageNameRegex, string classNameRegex = null )
+		public static bool FindTarget(out string pAndroidPackageName, out string pAndroidClassName, string pPackageNameRegex, string pClassNameRegex = null)
 		{
-			androidPackageName = null;
-			androidClassName = null;
+			pAndroidPackageName = null;
+			pAndroidClassName = null;
 
-	#if !UNITY_EDITOR && UNITY_ANDROID
-			if( string.IsNullOrEmpty( packageNameRegex ) )
+			#if !UNITY_EDITOR && UNITY_ANDROID
+			if (string.IsNullOrEmpty(pPackageNameRegex))
+			{
 				return false;
+			}
 
-			if( classNameRegex == null )
-				classNameRegex = string.Empty;
+			if (pPackageNameRegex == null)
+			{
+				pPackageNameRegex = string.Empty;
+			}
 
-			string result = AJC.CallStatic<string>( "FindMatchingTarget", Context, packageNameRegex, classNameRegex );
-			if( string.IsNullOrEmpty( result ) )
+			string result = AJC.CallStatic<string>("FindMatchingTarget", Context, pPackageNameRegex, pClassNameRegex);
+			
+			if (string.IsNullOrEmpty(result))
+			{
 				return false;
+			}
 
-			int splitIndex = result.IndexOf( '>' );
-			if( splitIndex <= 0 || splitIndex >= result.Length - 1 )
+			int splitIndex = result.IndexOf('>');
+
+			if ((splitIndex <= 0) || (splitIndex >= (result.Length - 1)))
+			{
 				return false;
+			}
 
-			androidPackageName = result.Substring( 0, splitIndex );
-			androidClassName = result.Substring( splitIndex + 1 );
+			pAndroidPackageName = result.Substring(0, splitIndex);
+			pAndroidClassName = result.Substring(splitIndex + 1);
 
 			return true;
-	#else
+			#else
 			return false;
-	#endif
+			#endif
 		}
-		#endregion
+
+
+		#if !UNITY_EDITOR && UNITY_ANDROID
+		private static AndroidJavaClass AJC
+		{
+			get
+			{
+				if (m_ajc == null)
+				{
+					m_ajc = new AndroidJavaClass("com.yasirkula.unity.NativeShare");
+				}
+
+				return m_ajc;
+			}
+		}
+		
+		private static AndroidJavaObject Context
+		{
+			get
+			{
+				if (m_context == null)
+				{
+					using (AndroidJavaObject _unityClass = new AndroidJavaClass("com.unity3d.player.UnityPlayer"))
+					{
+						m_context = _unityClass.GetStatic<AndroidJavaObject>("currentActivity");
+					}
+				}
+
+				return m_context;
+			}
+		}
+		#endif
 	}
 }
