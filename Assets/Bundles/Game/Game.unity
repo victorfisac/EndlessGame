@@ -552,7 +552,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 08259b5e17ba74badbb0d65c7fb81859, type: 3}
-    m_FontSize: 50
+    m_FontSize: 43
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -563,7 +563,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: DRAG <color=yellow>LEFT</color>/<color=cyan>RIGHT</color> TO ROTATE
+  m_Text: DRAG <color=yellow>LEFT</color>/<color=cyan>RIGHT</color> TO SPIN THE CIRCLE
 --- !u!222 &215194635
 CanvasRenderer:
   m_ObjectHideFlags: 0
