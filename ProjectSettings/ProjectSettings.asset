@@ -258,15 +258,15 @@ PlayerSettings:
   AndroidTargetArchitectures: 3
   AndroidSplashScreenScale: 0
   androidSplashScreen: {fileID: 0}
-  AndroidKeystoreName: 
-  AndroidKeyaliasName: 
+  AndroidKeystoreName: '{inproject}: Assets/__LOCAL/pong_switch.keystore'
+  AndroidKeyaliasName: victorfisac
   AndroidBuildApkPerCpuArchitecture: 0
   AndroidTVCompatibility: 0
   AndroidIsGame: 1
   AndroidEnableTango: 0
   androidEnableBanner: 1
   androidUseLowAccuracyLocation: 1
-  androidUseCustomKeystore: 0
+  androidUseCustomKeystore: 1
   m_AndroidBanners:
   - width: 320
     height: 180
@@ -278,7 +278,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: 9b4a1d072edfb4f33af43441f2de7f89, type: 3}
+      m_Icon: {fileID: 2800000, guid: b0e3d52cf38ce4e2da5670a7ec292d08, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -364,37 +364,37 @@ PlayerSettings:
       m_Kind: 1
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 9b4a1d072edfb4f33af43441f2de7f89, type: 3}
+      - {fileID: 2800000, guid: b0e3d52cf38ce4e2da5670a7ec292d08, type: 3}
       m_Width: 192
       m_Height: 192
       m_Kind: 0
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 9b4a1d072edfb4f33af43441f2de7f89, type: 3}
+      - {fileID: 2800000, guid: b0e3d52cf38ce4e2da5670a7ec292d08, type: 3}
       m_Width: 144
       m_Height: 144
       m_Kind: 0
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 9b4a1d072edfb4f33af43441f2de7f89, type: 3}
+      - {fileID: 2800000, guid: b0e3d52cf38ce4e2da5670a7ec292d08, type: 3}
       m_Width: 96
       m_Height: 96
       m_Kind: 0
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 9b4a1d072edfb4f33af43441f2de7f89, type: 3}
+      - {fileID: 2800000, guid: b0e3d52cf38ce4e2da5670a7ec292d08, type: 3}
       m_Width: 72
       m_Height: 72
       m_Kind: 0
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 9b4a1d072edfb4f33af43441f2de7f89, type: 3}
+      - {fileID: 2800000, guid: b0e3d52cf38ce4e2da5670a7ec292d08, type: 3}
       m_Width: 48
       m_Height: 48
       m_Kind: 0
       m_SubKind: 
     - m_Textures:
-      - {fileID: 2800000, guid: 9b4a1d072edfb4f33af43441f2de7f89, type: 3}
+      - {fileID: 2800000, guid: b0e3d52cf38ce4e2da5670a7ec292d08, type: 3}
       m_Width: 36
       m_Height: 36
       m_Kind: 0
