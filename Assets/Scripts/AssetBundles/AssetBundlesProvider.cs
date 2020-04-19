@@ -30,35 +30,42 @@ namespace EndlessGame.AssetBundles
             string _uri = string.Concat(BASE_URL, "version.json");
 
             HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
-                if (res.IsSuccess)
+                VersionManifest _manifest = null;
+
+                if (res != null)
                 {
-                    VersionManifest _manifest = JsonUtility.FromJson<VersionManifest>(res.DataAsText);
-
-                    for (int i = 0, count = _manifest.versions.Length; i < count; i++)
+                    if (res.IsSuccess)
                     {
-                        VersionDefinition _version = _manifest.versions[i];
+                        _manifest = JsonUtility.FromJson<VersionManifest>(res.DataAsText);
 
-                        if (_version.version.Equals(Application.version))
+                        for (int i = 0, count = _manifest.versions.Length; i < count; i++)
                         {
-                            m_subfolder = _version.folder;
-                            break;
+                            VersionDefinition _version = _manifest.versions[i];
+
+                            if (_version.version.Equals(Application.version))
+                            {
+                                m_subfolder = _version.folder;
+                                break;
+                            }
                         }
                     }
-
-                    if (pOnManifestLoaded != null)
+                    else
                     {
-                        pOnManifestLoaded(_manifest);
+                        Debug.LogError("AssetBundlesProvider: failed to load asset bundles manifest.");
                     }
+
+                    res.Dispose();
                 }
-                else
+
+                if (pOnManifestLoaded != null)
                 {
-                    Debug.LogError("AssetBundlesProvider: failed to load asset bundles manifest.");
+                    pOnManifestLoaded(_manifest);
                 }
 
                 req.Dispose();
-                res.Dispose();
             });
 
+            _request.ConnectTimeout = TimeSpan.FromSeconds(5);
             _request.DisableCache = true;
             _request.Send();
         }
@@ -69,25 +76,31 @@ namespace EndlessGame.AssetBundles
             string _uri = string.Concat(BASE_URL, m_subfolder, "/manifest.json");
 
             HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
-                if (res.IsSuccess)
-                {
-                    LoadingManifest _manifest = JsonUtility.FromJson<LoadingManifest>(res.DataAsText);
+                LoadingManifest _manifest = null;
 
-                    if (pOnManifestLoaded != null)
-                    {
-                        pOnManifestLoaded(_manifest);
-                    }
-                }
-                else
+                if (res != null)
                 {
-                    Debug.LogError("AssetBundlesProvider: failed to load asset bundles manifest.");
+                    if (res.IsSuccess)
+                    {
+                        _manifest = JsonUtility.FromJson<LoadingManifest>(res.DataAsText);
+                    }
+                    else
+                    {
+                        Debug.LogError("AssetBundlesProvider: failed to load asset bundles manifest.");
+                    }
+
+                    res.Dispose();
+                }
+
+                if (pOnManifestLoaded != null)
+                {
+                    pOnManifestLoaded(_manifest);
                 }
 
                 req.Dispose();
-                res.Dispose();
             });
 
-            _request.DisableCache = true;
+            _request.ConnectTimeout = TimeSpan.FromSeconds(5);
             _request.Send();
         }
 
@@ -103,36 +116,46 @@ namespace EndlessGame.AssetBundles
             string _uri = string.Concat(BASE_URL, m_subfolder, "/", pAssetBundle);
             
             HTTPRequest _request = new HTTPRequest(new Uri(_uri), HTTPMethods.Get, (req, res) => {
-                if (res.IsSuccess)
+                if (res != null)
                 {
-                    AssetBundleCreateRequest _bundleRequest = AssetBundle.LoadFromMemoryAsync(res.Data);
-                    _bundleRequest.completed += (op) => { 
-                        if (op.isDone)
-                        {
-                            m_bundlesDict.Add(pAssetBundle, _bundleRequest.assetBundle);
-
-                            Debug.LogFormat("AssetBundlesProvider: loaded asset bundle '{0}' with success.", pAssetBundle);
-
-                            if (pOnAssetBundleLoaded != null)
+                    if (res.IsSuccess)
+                    {
+                        AssetBundleCreateRequest _bundleRequest = AssetBundle.LoadFromMemoryAsync(res.Data);
+                        _bundleRequest.completed += (op) => { 
+                            if (op.isDone)
                             {
-                                pOnAssetBundleLoaded(_bundleRequest.assetBundle);
+                                m_bundlesDict.Add(pAssetBundle, _bundleRequest.assetBundle);
+
+                                Debug.LogFormat("AssetBundlesProvider: loaded asset bundle '{0}' with success.", pAssetBundle);
+
+                                if (pOnAssetBundleLoaded != null)
+                                {
+                                    pOnAssetBundleLoaded(_bundleRequest.assetBundle);
+                                }
                             }
-                        }
-                        else
+                            else
+                            {
+                                Debug.LogErrorFormat("AssetBundlesProvider: failed to load asset bundle '{0}'.", pAssetBundle);
+                            }
+                        };
+                    }
+                    else
+                    {
+                        Debug.LogErrorFormat("AssetBundlesProvider: failed to download asset bundle '{0}'.\n{1}", pAssetBundle, res.DataAsText);
+
+                        if (pOnAssetBundleLoaded != null)
                         {
-                            Debug.LogErrorFormat("AssetBundlesProvider: failed to load asset bundle '{0}'.", pAssetBundle);
+                            LoadAssetBundle(pAssetBundle, pOnAssetBundleLoaded);
                         }
-                    };
-                }
-                else
-                {
-                    Debug.LogErrorFormat("AssetBundlesProvider: failed to download asset bundle '{0}'.\n{1}", pAssetBundle, res.DataAsText);
+                    }
+
+                    res.Dispose();
                 }
 
                 req.Dispose();
-                res.Dispose();
             });
 
+            _request.ConnectTimeout = TimeSpan.FromSeconds(5);
             _request.Send();
         }
 

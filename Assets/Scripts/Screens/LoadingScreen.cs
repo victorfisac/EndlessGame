@@ -47,6 +47,12 @@ namespace EndlessGame.Screens
 
         private void OnVersionManifestLoaded(VersionManifest pManifest)
         {
+            if (pManifest == null)
+            {
+                Awake();
+                return;
+            }
+
             AssetBundlesProvider.Instance.LoadAssetBundlesManifest(OnAssetBundlesManifestLoaded);
         }
 
