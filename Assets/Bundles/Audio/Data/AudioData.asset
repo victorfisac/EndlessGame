@@ -16,19 +16,19 @@ MonoBehaviour:
   - Type: 0
     Clip: {fileID: 8300000, guid: e1b9a65b7f7a61f45ad5019686722d0b, type: 3}
     Loop: 0
-    Volume: 0.3
+    Volume: 0.2
     Pitch: 0
     RandomPitch: {x: 0, y: 0}
   - Type: 1
     Clip: {fileID: 8300000, guid: 497b8d2a3b7606e4aa38c787674106ee, type: 3}
     Loop: 0
-    Volume: 0.5
+    Volume: 0.4
     Pitch: 0
     RandomPitch: {x: 0, y: 0}
   - Type: 2
     Clip: {fileID: 8300000, guid: 9bb4b89381759b44e8f7d69a783f5fea, type: 3}
     Loop: 0
-    Volume: 0.2
+    Volume: 0.1
     Pitch: 0
     RandomPitch: {x: 0, y: 0}
   - Type: 3
@@ -40,7 +40,7 @@ MonoBehaviour:
   - Type: 4
     Clip: {fileID: 8300000, guid: 81ae29483a2b94bcd859249282503e77, type: 3}
     Loop: 0
-    Volume: 0.3
+    Volume: 0.2
     Pitch: 1
     RandomPitch: {x: 0.8, y: 1.2}
   - Type: -1
@@ -52,12 +52,12 @@ MonoBehaviour:
   - Type: 5
     Clip: {fileID: 8300000, guid: eec300a37efcb53459f6e1f4ebffcfee, type: 3}
     Loop: 0
-    Volume: 0.35
+    Volume: 0.225
     Pitch: 0
     RandomPitch: {x: 0, y: 0}
   - Type: 6
     Clip: {fileID: 8300000, guid: 25476ee77e6a62247855982c9f6d641e, type: 3}
     Loop: 0
-    Volume: 0.5
+    Volume: 0.25
     Pitch: 0
     RandomPitch: {x: 0, y: 0}
