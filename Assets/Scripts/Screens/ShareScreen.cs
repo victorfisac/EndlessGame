@@ -58,28 +58,12 @@ namespace EndlessGame.Screens
             renderCamera.targetTexture = null;
 
             byte[] _pixels = _renderTex.EncodeToPNG();
-            string _savePath = string.Concat(Application.dataPath, ShareComponent.SHARE_IMAGE_FILENAME);
+            string _savePath = string.Concat(Application.persistentDataPath, ShareComponent.SHARE_IMAGE_FILENAME);
 
             File.WriteAllBytes(_savePath, _pixels);
             Destroy(_renderTex);
             _rt.Release();
             Destroy(_rt);
-        }
-
-        private void RenderTextureAndSave()
-        {
-            Rect _screenRect = BoundsToScreenSpace();
-            
-            Texture2D _renderTex = new Texture2D((int)_screenRect.width, (int)_screenRect.height, TextureFormat.RGB24, false);
-            _renderTex.ReadPixels(_screenRect, 0, 0);
-            
-            byte[] _pixels = _renderTex.EncodeToPNG();
-            string _savePath = string.Concat(Application.persistentDataPath, ShareComponent.SHARE_IMAGE_FILENAME);
-
-            File.WriteAllBytes(_savePath, _pixels);
-            Destroy(_renderTex);
-
-            gameObject.SetActive(false);
         }
 
         private Rect BoundsToScreenSpace()
