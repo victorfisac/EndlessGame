@@ -1,4 +1,4 @@
-﻿Shader "UI/Default Mobile"
+﻿Shader "EndlessGame/Default"
 {
 	Properties
 	{

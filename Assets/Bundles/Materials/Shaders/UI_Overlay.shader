@@ -1,4 +1,4 @@
-﻿Shader "UI/Overlay"
+﻿Shader "EndlessGame/Overlay"
 {
 	Properties
 	{

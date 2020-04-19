@@ -67,6 +67,7 @@ namespace EndlessGame.Audio
             _channel.Source.clip = _data.Clip;
             _channel.Source.loop = _data.Loop;
             _channel.Source.volume = _data.Volume;
+            _channel.Source.pitch = (_data.Pitch ? Random.Range(_data.RandomPitch.x, _data.RandomPitch.y) : 1f);
 
             if (_channel.Source.clip != null)
             {

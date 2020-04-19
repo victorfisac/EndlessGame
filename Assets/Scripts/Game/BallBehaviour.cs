@@ -118,7 +118,7 @@ namespace EndlessGame.Game
 
         public float LimitDistance
         {
-            set { m_circleRadius = value - rectTrans.sizeDelta.x - rectTrans.sizeDelta.x/2f; }
+            set { m_circleRadius = value - rectTrans.sizeDelta.x - rectTrans.sizeDelta.x/2f + 2f; }
         }
 
         public float Speed

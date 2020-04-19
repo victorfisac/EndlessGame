@@ -24,7 +24,7 @@ namespace EndlessGame.Components
         private Button button;
 
 
-        public const string SHARE_IMAGE_FILENAME = "/color_pong_share.png";
+        public const string SHARE_IMAGE_FILENAME = "/color_loop_share.png";
         private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
         private const string SHARE_SCENE_NAME = "Share";
 

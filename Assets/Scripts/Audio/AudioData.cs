@@ -21,5 +21,7 @@ namespace EndlessGame.Audio
         public bool Loop;
         [Range(0f, 1f)]
         public float Volume = 1f;
+        public bool Pitch;
+        public Vector2 RandomPitch = Vector2.zero;
     }
 }

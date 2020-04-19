@@ -1,4 +1,4 @@
-﻿Shader "UI/Blur"
+﻿Shader "EndlessGame/Blur"
 {
     Properties
     {
