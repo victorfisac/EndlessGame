@@ -29,9 +29,6 @@ namespace EndlessGame.Services
             m_data = pData;
             m_initialized = true;
 
-            PlayGamesPlatform.DebugLogEnabled = true;
-            PlayGamesPlatform.Activate();
-
             Debug.Log("GooglePlayGamesService: initialization completed.");
         }
 
@@ -58,7 +55,7 @@ namespace EndlessGame.Services
             {
                 Debug.Log("GooglePlayGamesService: opening native leaderboard interface.");
                 
-                PlayGamesPlatform.Instance.ShowLeaderboardUI(LEADERBOARD_ID);
+                PlayGamesPlatform.Instance.ShowLeaderboardUI();
             }
             else
             {
