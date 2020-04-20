@@ -29,6 +29,9 @@ namespace EndlessGame.Services
             m_data = pData;
             m_initialized = true;
 
+            PlayGamesPlatform.DebugLogEnabled = true;
+            PlayGamesPlatform.Activate();
+
             Debug.Log("GooglePlayGamesService: initialization completed.");
         }
 
