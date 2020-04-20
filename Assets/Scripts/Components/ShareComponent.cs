@@ -2,6 +2,7 @@
 
 
 using EndlessGame.Plugins;
+using EndlessGame.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -78,6 +79,8 @@ namespace EndlessGame.Components
             _share.AddFile(_filePath);
 
             _share.Share();
+
+            GooglePlayGamesService.Instance.ReportAchievementShare();
         }
 
         private string GetDownloadLink()
