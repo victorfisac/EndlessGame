@@ -45,8 +45,7 @@ namespace EndlessGame.Audio
                 }
                 else
                 {
-                    PlayerPrefs.SetInt(PLAYERPREFS_SOUND, 1);
-                    PlayerPrefs.Save();
+                    SaveToPlayerPrefs();
                 }
             }
         }
@@ -156,6 +155,12 @@ namespace EndlessGame.Audio
             };
         }
 
+        private void SaveToPlayerPrefs()
+        {
+            PlayerPrefs.SetInt(PLAYERPREFS_SOUND, (m_enabled ? 1 : 0));
+            PlayerPrefs.Save();
+        }
+
 
         public static AudioManager Instance
         {
@@ -165,7 +170,12 @@ namespace EndlessGame.Audio
         public bool Enabled
         {
             get { return m_enabled; }
-            set { m_enabled = value; }
+            set
+            {
+                m_enabled = value;
+
+                SaveToPlayerPrefs();
+            }
         }
 
 
