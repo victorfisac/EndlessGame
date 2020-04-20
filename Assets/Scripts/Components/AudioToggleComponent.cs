@@ -25,8 +25,6 @@ namespace EndlessGame.Components
 
         private AudioManager m_manager = null;
 
-        private const string PLAYERPREFS_AUDIO = "AUDIO";
-
 
         private void Awake()
         {
@@ -49,7 +47,7 @@ namespace EndlessGame.Components
         {
             AudioListener.volume = (m_manager.Enabled ? 1f : 0f);
 
-            m_image.sprite =  (m_manager.Enabled ? m_soundOnSprite : m_soundOffSprite);
+            m_image.sprite = (m_manager.Enabled ? m_soundOnSprite : m_soundOffSprite);
         }
     }
 }

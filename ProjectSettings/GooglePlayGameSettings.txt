@@ -1,0 +1,9 @@
+lastUpgrade=01008
+proj.pluginVersion=0.10.08
+proj.AppId=540688291041
+and.BundleId=com.VictorFisac.PongSwitch
+proj.classDir=Assets%2fGooglePlayGames%2fData
+proj.ConstantsClassName=GPGSConstantIds
+and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0a%3c%21--%0aGoogle+Play+game+services+IDs.%0aSave+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.%0a--%3e%0a%3cresources%3e%0a++%3c%21--+app_id+--%3e%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e540688291041%3c%2fstring%3e%0a++%3c%21--+package_name+--%3e%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3ecom.VictorFisac.PongSwitch%3c%2fstring%3e%0a++%3c%21--+achievement+First+try+--%3e%0a++%3cstring+name%3d%22achievement_first_try%22+translatable%3d%22false%22%3eCgkI4aminN4PEAIQAg%3c%2fstring%3e%0a++%3c%21--+achievement+Get+10+points%21+--%3e%0a++%3cstring+name%3d%22achievement_get_10_points%22+translatable%3d%22false%22%3eCgkI4aminN4PEAIQAw%3c%2fstring%3e%0a++%3c%21--+achievement+Get+15+points%21+--%3e%0a++%3cstring+name%3d%22achievement_get_15_points%22+translatable%3d%22false%22%3eCgkI4aminN4PEAIQBA%3c%2fstring%3e%0a++%3c%21--+achievement+Get+20+points%21+--%3e%0a++%3cstring+name%3d%22achievement_get_20_points%22+translatable%3d%22false%22%3eCgkI4aminN4PEAIQBQ%3c%2fstring%3e%0a++%3c%21--+achievement+Get+30+points%21+--%3e%0a++%3cstring+name%3d%22achievement_get_30_points%22+translatable%3d%22false%22%3eCgkI4aminN4PEAIQBw%3c%2fstring%3e%0a++%3c%21--+achievement+Share+to+a+friend%21+--%3e%0a++%3cstring+name%3d%22achievement_share_to_a_friend%22+translatable%3d%22false%22%3eCgkI4aminN4PEAIQBg%3c%2fstring%3e%0a++%3c%21--+leaderboard+Ranking+--%3e%0a++%3cstring+name%3d%22leaderboard_ranking%22+translatable%3d%22false%22%3eCgkI4aminN4PEAIQAQ%3c%2fstring%3e%0a%3c%2fresources%3e
+and.ClientId=540688291041-6ff0rtdnic4m4e8s3evrcro48r251a6g.apps.googleusercontent.com
+android.SetupDone=true
