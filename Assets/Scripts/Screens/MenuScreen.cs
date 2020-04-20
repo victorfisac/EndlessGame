@@ -4,6 +4,7 @@
 using System.Collections;
 using DG.Tweening;
 using EndlessGame.Audio;
+using EndlessGame.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -64,7 +65,7 @@ namespace EndlessGame.Screens
         {
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
-            // TODO_VICTOR: open ranking through Google Play Games service
+            GooglePlayGamesService.Instance.ShowLeaderboard();
         }
 
         private void OnGameSceneLoaded(AsyncOperation pOperation)
