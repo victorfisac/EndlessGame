@@ -3,7 +3,7 @@
 
 namespace EndlessGame.Game
 {
-    [CreateAssetMenu(fileName = "NewGameConfig", menuName = "EndlessGame/Create Game Config Object")]
+    [CreateAssetMenu(fileName = "NewGameConfig", menuName = "EndlessGame/Create Game Config data")]
     public class GameConfig : ScriptableObject
     {
         [Header("Circle")]
