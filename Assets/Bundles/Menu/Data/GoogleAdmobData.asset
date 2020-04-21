@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bannerId: ca-app-pub-4291494329942604/7299034504
   intersticialId: ca-app-pub-4291494329942604/4672871162
+  testingDevices:
+  - 0B67E623528531E78E0B92259B797AA5
