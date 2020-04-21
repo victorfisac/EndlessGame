@@ -90,7 +90,7 @@ namespace EndlessGame.Services
             #if !UNITY_EDITOR
             m_bannerView = new BannerView(m_data.bannerId, AdSize.SmartBanner, AdPosition.Bottom);
 
-            AdRequest.Builder _request = CreateAdRequest();
+            AdRequest _request = CreateAdRequest();
             m_bannerView.OnAdLoaded += OnBannerLoaded;
             m_bannerView.OnAdFailedToLoad += OnBannerFailed;
 
