@@ -65,6 +65,7 @@ namespace EndlessGame.Services
                 return;
             }
 
+            #if !UNITY_EDITOR
             m_interstitialView = new InterstitialAd(m_data.intersticialId);
 
             AdRequest _request = new AdRequest.Builder().Build();
@@ -73,6 +74,7 @@ namespace EndlessGame.Services
             m_interstitialView.OnAdClosed += OnIntersticialClosed;
 
             m_interstitialView.LoadAd(_request);
+            #endif
         }
 
         public void ShowBanner()
@@ -83,6 +85,7 @@ namespace EndlessGame.Services
                 return;
             }
 
+            #if !UNITY_EDITOR
             m_bannerView = new BannerView(m_data.bannerId, AdSize.SmartBanner, AdPosition.Bottom);
 
             AdRequest _request = new AdRequest.Builder().Build();
@@ -90,6 +93,7 @@ namespace EndlessGame.Services
             m_bannerView.OnAdFailedToLoad += OnBannerFailed;
 
             m_bannerView.LoadAd(_request);
+            #endif
         }
 
         public void HideBanner()
@@ -99,10 +103,12 @@ namespace EndlessGame.Services
                 Debug.LogWarning("GoogleAdmobService: there is no banner advertisement to hide.");
             }
 
+            #if !UNITY_EDITOR
             m_bannerView.Hide();
             m_bannerView.Destroy();
 
             m_bannerView = null;
+            #endif
         }
 
         private void OnAdmobInitialized(InitializationStatus pResult)
@@ -147,6 +153,9 @@ namespace EndlessGame.Services
 
         private void OnIntersticialClosed(object pSender, EventArgs pArguments)
         {
+            m_interstitialView.Destroy();
+            m_interstitialView = null;
+            
             Debug.Log("GoogleAdmobService: closed banner advertisement with success.");
         }
 
