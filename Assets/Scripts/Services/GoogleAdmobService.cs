@@ -70,7 +70,7 @@ namespace EndlessGame.Services
             #if !UNITY_EDITOR
             m_interstitialView = new InterstitialAd(m_data.intersticialId);
 
-            AdRequest.Builder _request = CreateAdRequest();
+            AdRequest _request = CreateAdRequest();
             m_interstitialView.OnAdLoaded += OnIntersticialLoaded;
             m_interstitialView.OnAdFailedToLoad += OnIntersticialFailed;
             m_interstitialView.OnAdClosed += OnIntersticialClosed;
@@ -177,16 +177,16 @@ namespace EndlessGame.Services
             Debug.Log("GoogleAdmobService: closed banner advertisement with success.");
         }
 
-        private AdRequest.Builder CreateAdRequest()
+        private AdRequest CreateAdRequest()
         {
-            AdRequest.Builder _request = new AdRequest.Builder();
+            AdRequest.Builder _builder = new AdRequest.Builder();
 
             for (int i = 0, count = m_data.testingDevices.Length; i < count; i++)
             {
-                _request.AddTestDevice(m_data.testingDevices[i]);
+                _builder.AddTestDevice(m_data.testingDevices[i]);
             }
 
-            _request.Build();
+            AdRequest _request = _builder.Build();
 
             return _request;
         }
