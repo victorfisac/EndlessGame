@@ -61,8 +61,6 @@ namespace GoogleMobileAds.iOS
 
         public event EventHandler<EventArgs> OnAdOpening;
 
-        public event EventHandler<EventArgs> OnAdStarted;
-
         public event EventHandler<EventArgs> OnAdClosed;
 
         public event EventHandler<Reward> OnUserEarnedReward;
