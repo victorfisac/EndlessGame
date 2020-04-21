@@ -1,4 +1,5 @@
 ﻿using System;
+using EndlessGame.Audio;
 using GoogleMobileAds.Api;
 using UnityEngine;
 
@@ -14,8 +15,10 @@ namespace EndlessGame.Services
         void ShowIntersticial();
         void ShowBanner();
         void HideBanner();
+        void SetVolume(bool pActive);
 
         OnServiceInitialized OnServiceInitializedCallback { get; set; }
+        bool Initialized { get; }
     }
     
 
@@ -30,7 +33,6 @@ namespace EndlessGame.Services
         private BannerView m_bannerView = null;
         private InterstitialAd m_interstitialView = null;
         
-
 
         public void Initialize(GoogleAdmobData pData)
         {
@@ -54,7 +56,7 @@ namespace EndlessGame.Services
             m_initializing = true;
             MobileAds.Initialize(OnAdmobInitialized);
 
-            Debug.Log("GoogleAdmobService: initialization completed.");
+            Debug.LogFormat("GoogleAdmobService: initialization completed ('{0}' testing devices).", m_data.testingDevices.Length);
         }
 
         public void ShowIntersticial()
@@ -68,7 +70,7 @@ namespace EndlessGame.Services
             #if !UNITY_EDITOR
             m_interstitialView = new InterstitialAd(m_data.intersticialId);
 
-            AdRequest _request = new AdRequest.Builder().Build();
+            AdRequest.Builder _request = CreateAdRequest();
             m_interstitialView.OnAdLoaded += OnIntersticialLoaded;
             m_interstitialView.OnAdFailedToLoad += OnIntersticialFailed;
             m_interstitialView.OnAdClosed += OnIntersticialClosed;
@@ -88,7 +90,7 @@ namespace EndlessGame.Services
             #if !UNITY_EDITOR
             m_bannerView = new BannerView(m_data.bannerId, AdSize.SmartBanner, AdPosition.Bottom);
 
-            AdRequest _request = new AdRequest.Builder().Build();
+            AdRequest.Builder _request = CreateAdRequest();
             m_bannerView.OnAdLoaded += OnBannerLoaded;
             m_bannerView.OnAdFailedToLoad += OnBannerFailed;
 
@@ -101,6 +103,7 @@ namespace EndlessGame.Services
             if (m_bannerView == null)
             {
                 Debug.LogWarning("GoogleAdmobService: there is no banner advertisement to hide.");
+                return;
             }
 
             #if !UNITY_EDITOR
@@ -111,6 +114,17 @@ namespace EndlessGame.Services
             #endif
         }
 
+        public void SetVolume(bool pActive)
+        {
+            if (!m_initialized)
+            {
+                Debug.LogWarning("GoogleAdmobService: service is not initialized yet.");
+                return;
+            }
+
+            MobileAds.SetApplicationMuted(!pActive);
+        }
+
         private void OnAdmobInitialized(InitializationStatus pResult)
         {
             m_initializing = false;
@@ -118,12 +132,16 @@ namespace EndlessGame.Services
 
             if (m_initialized)
             {
+                MobileAds.SetApplicationMuted(AudioManager.Instance.Enabled);
+
                 Debug.Log("GoogleAdmobService: initialized service with success.");
             }
+            #if !UNITY_EDITOR
             else
             {
                 Debug.LogError("GoogleAdmobService: failed to initialize service.");
             }
+            #endif
 
             if (m_onServiceInitialized != null)
             {
@@ -159,6 +177,20 @@ namespace EndlessGame.Services
             Debug.Log("GoogleAdmobService: closed banner advertisement with success.");
         }
 
+        private AdRequest.Builder CreateAdRequest()
+        {
+            AdRequest.Builder _request = new AdRequest.Builder();
+
+            for (int i = 0, count = m_data.testingDevices.Length; i < count; i++)
+            {
+                _request.AddTestDevice(m_data.testingDevices[i]);
+            }
+
+            _request.Build();
+
+            return _request;
+        }
+
 
         public static GoogleAdmobService Instance
         {
@@ -177,6 +209,11 @@ namespace EndlessGame.Services
         {
             get { return m_onServiceInitialized; }
             set { m_onServiceInitialized = value; }
+        }
+
+        public bool Initialized
+        {
+            get { return m_initialized; }
         }
     }
 }

@@ -8,5 +8,6 @@ namespace EndlessGame.Services
     {
         public string bannerId;
         public string intersticialId;
+        public string[] testingDevices;
     }
 }

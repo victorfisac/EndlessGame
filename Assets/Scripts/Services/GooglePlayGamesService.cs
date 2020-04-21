@@ -48,7 +48,6 @@ namespace EndlessGame.Services
             Debug.Log("GooglePlayGamesService: initialization completed.");
         }
 
-
         public void SignIn(Action<bool> pOnSignInCompleted = null)
         {
             Debug.Log("GooglePlayGamesService: authentication process started.");
