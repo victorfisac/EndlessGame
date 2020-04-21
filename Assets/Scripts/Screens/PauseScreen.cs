@@ -4,6 +4,7 @@
 using System.Collections;
 using DG.Tweening;
 using EndlessGame.Audio;
+using EndlessGame.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -39,6 +40,8 @@ namespace EndlessGame.Screens
             m_audioManager = AudioManager.Instance;
             continueButton.onClick.AddListener(OnContinueButtonPressed);
             exitButton.onClick.AddListener(OnExitButtonPressed);
+
+            GoogleAdmobService.Instance.ShowBanner();
         }
 
         private void Update()
@@ -57,6 +60,8 @@ namespace EndlessGame.Screens
 
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
 
+            GoogleAdmobService.Instance.HideBanner();
+
             StartCoroutine(GoToGame());
         }
 
@@ -66,6 +71,8 @@ namespace EndlessGame.Screens
             exitButton.interactable = false;
 
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
+
+            GoogleAdmobService.Instance.HideBanner();
 
             StartCoroutine(GoToMenu());
         }

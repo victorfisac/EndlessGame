@@ -58,6 +58,8 @@ namespace EndlessGame.Screens
 
             m_audioManager.Play(ClipType.GAME_START);
 
+            GoogleAdmobService.Instance.HideBanner();
+
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnGameSceneLoaded;
         }
 
