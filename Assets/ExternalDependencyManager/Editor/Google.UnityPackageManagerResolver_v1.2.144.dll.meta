@@ -4,6 +4,7 @@ labels:
 - gvh
 - gvh_version-1.2.144
 - gvhp_exportpath-Assets/ExternalDependencyManager/Editor/Google.UnityPackageManagerResolver_v1.2.144.dll
+- gvhp_exportpath-Assets\ExternalDependencyManager\Editor\Google.UnityPackageManagerResolver_v1.2.144.dll
 - gvhp_targets-editor
 PluginImporter:
   externalObjects: {}
