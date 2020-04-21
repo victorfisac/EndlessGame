@@ -96,8 +96,6 @@ namespace EndlessGame.Screens
 
             m_audioManager.Play(ClipType.GAME_START);
 
-            GoogleAdmobService.Instance.HideBanner();
-
             GoogleAdmobService.Instance.ShowIntersticial();
 
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnGameSceneLoaded;
@@ -170,6 +168,8 @@ namespace EndlessGame.Screens
         {
             if (pOperation.isDone)
             {
+                GoogleAdmobService.Instance.HideBanner();
+                
                 StartCoroutine(GoToGame());
             }
             else

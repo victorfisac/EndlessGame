@@ -161,12 +161,12 @@ namespace EndlessGame.Services
 
         private void OnIntersticialLoaded(object pSender, EventArgs pArguments)
         {
-            Debug.Log("GoogleAdmobService: loaded banner advertisement with success.");
+            Debug.Log("GoogleAdmobService: loaded intersticial advertisement with success.");
         }
 
         private void OnIntersticialFailed(object pSender, AdFailedToLoadEventArgs pArguments)
         {
-            Debug.LogErrorFormat("GoogleAdmobService: failed to load banner advertisement ({0}).", pArguments.Message);
+            Debug.LogErrorFormat("GoogleAdmobService: failed to load intersticial advertisement ({0}).", pArguments.Message);
         }
 
         private void OnIntersticialClosed(object pSender, EventArgs pArguments)
@@ -174,7 +174,7 @@ namespace EndlessGame.Services
             m_interstitialView.Destroy();
             m_interstitialView = null;
             
-            Debug.Log("GoogleAdmobService: closed banner advertisement with success.");
+            Debug.Log("GoogleAdmobService: closed intersticial advertisement with success.");
         }
 
         private AdRequest CreateAdRequest()
