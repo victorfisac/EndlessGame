@@ -98,6 +98,8 @@ namespace EndlessGame.Screens
 
             GoogleAdmobService.Instance.HideBanner();
 
+            GoogleAdmobService.Instance.ShowIntersticial();
+
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnGameSceneLoaded;
         }
 
