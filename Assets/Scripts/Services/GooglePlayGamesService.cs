@@ -5,7 +5,17 @@ using UnityEngine;
 
 namespace EndlessGame.Services
 {
-    public class GooglePlayGamesService
+    public interface IGooglePlayGamesService
+    {
+        void Initialize(GooglePlayGamesData pData);
+        void SignIn(Action<bool> pOnSignInCompleted = null);
+        void ShowLeaderboard();
+        void ReportScore(int pScore, Action OnScoreReportedCallback = null);
+        void ReportAchievementShare();
+    }
+
+
+    public class GooglePlayGamesService : IGooglePlayGamesService
     {
         private static GooglePlayGamesService m_instance = null;
 
@@ -26,12 +36,17 @@ namespace EndlessGame.Services
                 return;
             }
 
+            if ((pData == null) || (pData.Achievements.Length == 0))
+            {
+                Debug.LogError("GooglePlayGamesService: provided invalid data for achievements.");
+                return;
+            }
+
             m_data = pData;
             m_initialized = true;
 
             Debug.Log("GooglePlayGamesService: initialization completed.");
         }
-
 
         public void SignIn(Action<bool> pOnSignInCompleted = null)
         {

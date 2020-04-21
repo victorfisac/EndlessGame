@@ -21,7 +21,10 @@ namespace EndlessGame.Components
 
         protected override void DoStateTransition(SelectionState pState, bool pInstant)
         {
-            m_animatedButton.SetButtonState((int)pState);
+            if (m_animatedButton != null)
+            {
+                m_animatedButton.SetButtonState((int)pState);
+            }
         }
     }
 }

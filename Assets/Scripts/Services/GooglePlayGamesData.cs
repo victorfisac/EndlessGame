@@ -7,7 +7,7 @@ namespace EndlessGame.Services
     [CreateAssetMenu(fileName = "NewGooglePlayGamesData", menuName = "EndlessGame/Create Google Play Games data")]
     public class GooglePlayGamesData : ScriptableObject
     {
-        public GooglePlayGamesElement[] Achievements;
+        public GooglePlayGamesElement[] Achievements = new GooglePlayGamesElement[0];
     }
 
     [Serializable]

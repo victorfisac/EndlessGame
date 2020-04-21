@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c17057335126ac9418d1f23223b06f04, type: 3}
+  m_Name: GoogleAdmobData
+  m_EditorClassIdentifier: 
+  bannerId: ca-app-pub-4291494329942604/7299034504
+  intersticialId: ca-app-pub-4291494329942604/4672871162
+  testingDevices:
+  - 0B67E623528531E78E0B92259B797AA5

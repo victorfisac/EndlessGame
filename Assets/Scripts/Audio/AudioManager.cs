@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using DG.Tweening;
 using EndlessGame.AssetBundles;
+using EndlessGame.Services;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -173,6 +174,13 @@ namespace EndlessGame.Audio
             set
             {
                 m_enabled = value;
+
+                GoogleAdmobService _admob = GoogleAdmobService.Instance;
+                
+                if (_admob.Initialized)
+                {
+                    _admob.SetVolume(m_enabled);
+                }
 
                 SaveToPlayerPrefs();
             }

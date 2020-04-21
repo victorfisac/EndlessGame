@@ -62,6 +62,8 @@ namespace EndlessGame.Screens
             retryButton.onClick.AddListener(OnRetryButtonPressed);
             rankingButton.onClick.AddListener(OnRankingButtonPressed);
             exitButton.onClick.AddListener(OnExitButtonPressed);
+
+            GoogleAdmobService.Instance.ShowBanner();
         }
 
         private void Start()
@@ -94,6 +96,8 @@ namespace EndlessGame.Screens
 
             m_audioManager.Play(ClipType.GAME_START);
 
+            GoogleAdmobService.Instance.ShowIntersticial();
+
             SceneManager.LoadSceneAsync(NEXT_SCENE_NAME, LoadSceneMode.Additive).completed += OnGameSceneLoaded;
         }
 
@@ -111,6 +115,8 @@ namespace EndlessGame.Screens
             exitButton.interactable = false;
 
             m_audioManager.Play(ClipType.BUTTON_PRESSED);
+
+            GoogleAdmobService.Instance.HideBanner();
 
             StartCoroutine(GoToMenu());
         }
@@ -162,6 +168,8 @@ namespace EndlessGame.Screens
         {
             if (pOperation.isDone)
             {
+                GoogleAdmobService.Instance.HideBanner();
+                
                 StartCoroutine(GoToGame());
             }
             else
