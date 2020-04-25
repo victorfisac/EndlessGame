@@ -61,13 +61,13 @@ namespace EndlessGame.Services
 
         public void ShowIntersticial()
         {
+            #if !UNITY_EDITOR
             if (m_bannerView != null)
             {
                 Debug.LogWarning("GoogleAdmobService: already showing an intersticial advertisement.");
                 return;
             }
-
-            #if !UNITY_EDITOR
+            
             m_interstitialView = new InterstitialAd(m_data.intersticialId);
 
             AdRequest _request = CreateAdRequest();
@@ -81,13 +81,13 @@ namespace EndlessGame.Services
 
         public void ShowBanner()
         {
+            #if !UNITY_EDITOR
             if (m_bannerView != null)
             {
                 Debug.LogWarning("GoogleAdmobService: already showing a banner advertisement.");
                 return;
             }
-
-            #if !UNITY_EDITOR
+            
             m_bannerView = new BannerView(m_data.bannerId, AdSize.SmartBanner, AdPosition.Bottom);
 
             AdRequest _request = CreateAdRequest();
@@ -100,13 +100,13 @@ namespace EndlessGame.Services
 
         public void HideBanner()
         {
+            #if !UNITY_EDITOR
             if (m_bannerView == null)
             {
                 Debug.LogWarning("GoogleAdmobService: there is no banner advertisement to hide.");
                 return;
             }
-
-            #if !UNITY_EDITOR
+            
             m_bannerView.Hide();
             m_bannerView.Destroy();
 
