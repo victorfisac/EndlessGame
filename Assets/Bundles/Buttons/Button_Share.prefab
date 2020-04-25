@@ -63,6 +63,7 @@ MonoBehaviour:
   m_Material: {fileID: 2100000, guid: 3a8d8f0bb27ab45d1b7c080e85d21d00, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -158,6 +159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   shareTitle: Share your high score
-  shareSubject: I challenge you to beat my score in Color Pong!
+  shareSubject: I challenge you to beat my score in Pong Switch!
   shareMessage: Hey, I scored {0} in Color Pong! Can you beat me? Play here {1}
   button: {fileID: 5317065351951619762}
