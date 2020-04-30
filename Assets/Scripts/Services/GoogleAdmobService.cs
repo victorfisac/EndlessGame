@@ -30,8 +30,11 @@ namespace EndlessGame.Services
         private bool m_initializing = false;
         private OnServiceInitialized m_onServiceInitialized = null;
         private GoogleAdmobData m_data = null;
-        private BannerView m_bannerView = null;
+
+        #if !UNITY_EDITOR
         private InterstitialAd m_interstitialView = null;
+        private BannerView m_bannerView = null;
+        #endif
         
 
         public void Initialize(GoogleAdmobData pData)
@@ -171,8 +174,10 @@ namespace EndlessGame.Services
 
         private void OnIntersticialClosed(object pSender, EventArgs pArguments)
         {
+            #if !UNITY_EDITOR
             m_interstitialView.Destroy();
             m_interstitialView = null;
+            #endif
             
             Debug.Log("GoogleAdmobService: closed intersticial advertisement with success.");
         }
