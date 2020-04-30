@@ -60,7 +60,6 @@ namespace EndlessGame.Screens
         private const string NEXT_SCENE_NAME = "End";
         private const string PAUSE_SCENE_NAME = "Pause";
         private const string PLAYERPREFS_SCORE = "SCORE";
-        private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
         private const string PLAYERPREFS_TUTORIAL = "TUTORIAL";
 
 
@@ -69,21 +68,21 @@ namespace EndlessGame.Screens
             m_audioManager = AudioManager.Instance;
             pauseButton.onClick.AddListener(OnPauseButtonPressed);
 
-            bool _showTutorial = !PlayerPrefs.HasKey(PLAYERPREFS_TUTORIAL);
-
-            if (m_showTutorial)
-            {
-                tutorial.SetActive(true);
-                PlayerPrefs.SetInt(PLAYERPREFS_TUTORIAL, 1);
-                PlayerPrefs.Save();
-            }
-
             gameManager.OnGameplayEndCallback += OnGameplayEnd;
             gameManager.OnBallCollisionCallback += OnBallCollision;
         }
 
         private IEnumerator Start()
         {
+            bool _showTutorial = !PlayerPrefs.HasKey(PLAYERPREFS_TUTORIAL);
+            tutorial.SetActive(_showTutorial);
+
+            if (m_showTutorial)
+            {
+                PlayerPrefs.SetInt(PLAYERPREFS_TUTORIAL, 1);
+                PlayerPrefs.Save();
+            }
+            
             yield return new WaitForSeconds(countAnimDelay*1.25f);
 
             DOTween.Play(ANIMATION_ID_COUNT);
