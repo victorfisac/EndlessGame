@@ -28,22 +28,12 @@ namespace EndlessGame.Game
         private float m_circleRadius = 0f;
         private float m_speed = 0f;
         private bool m_movement = false;
-        private Vector2 m_direction = new Vector2(0f, 0f);
+        private Vector2 m_direction = new Vector2(DIRECTION_INIT_VALUE, DIRECTION_INIT_VALUE);
         private OnBallCollision m_onBallCollisionCallback = null;
         private bool m_detect = true;
 
         private const float DIRECTION_INIT_VALUE = 0.75f;
         private const float DETECTION_DELAY_TIME = 0.15f;
-
-
-        private void Awake()
-        {
-            int _randomX = Random.Range(0, 2);
-            int _randomY = Random.Range(0, 2);
-
-            m_direction.x = ((_randomX == 1) ? DIRECTION_INIT_VALUE : -DIRECTION_INIT_VALUE);
-            m_direction.y = ((_randomX == 1) ? DIRECTION_INIT_VALUE : -DIRECTION_INIT_VALUE);
-        }
 
 
         private void Update()

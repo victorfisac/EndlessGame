@@ -63,8 +63,7 @@ namespace EndlessGame.Game
             ball.Movement = true;
             ball.LimitDistance = circleContainer.rect.width/2f;
             ball.Speed = gameConfig.BallSpeed;
-
-            SetRandomBallColor();
+            ball.Color = gameConfig.Colors[0];
         }
 
         public void SetPause(bool pPause)
