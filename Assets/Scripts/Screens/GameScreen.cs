@@ -44,10 +44,13 @@ namespace EndlessGame.Screens
         private BlurredScreenshotComponent blurredScreenshot;
         [SerializeField]
         private GameManager gameManager;
+        [SerializeField]
+        private GameObject tutorial;
 
 
         private int m_currentCount = 3;
         private AudioManager m_audioManager = null;
+        private static bool m_showTutorial = true;
 
         private const string ANIMATION_ID_COUNT = "Countdown";
         private const string ANIMATION_ID_PAUSE = "Game_Pause";
@@ -58,12 +61,22 @@ namespace EndlessGame.Screens
         private const string PAUSE_SCENE_NAME = "Pause";
         private const string PLAYERPREFS_SCORE = "SCORE";
         private const string PLAYERPREFS_BEST_SCORE = "BEST_SCORE";
+        private const string PLAYERPREFS_TUTORIAL = "TUTORIAL";
 
 
         private void Awake()
         {
             m_audioManager = AudioManager.Instance;
             pauseButton.onClick.AddListener(OnPauseButtonPressed);
+
+            bool _showTutorial = !PlayerPrefs.HasKey(PLAYERPREFS_TUTORIAL);
+
+            if (m_showTutorial)
+            {
+                tutorial.SetActive(true);
+                PlayerPrefs.SetInt(PLAYERPREFS_TUTORIAL, 1);
+                PlayerPrefs.Save();
+            }
 
             gameManager.OnGameplayEndCallback += OnGameplayEnd;
             gameManager.OnBallCollisionCallback += OnBallCollision;
