@@ -37,7 +37,11 @@ namespace EndlessGame.Editor
         {
             try
             {
-                m_ftpRequest = (FtpWebRequest)FtpWebRequest.Create(m_host + "/" + pRemoteFile);
+                string uri = m_host + "/" + pRemoteFile;
+
+                Debug.Log(uri);
+                
+                m_ftpRequest = (FtpWebRequest)FtpWebRequest.Create(uri);
                 m_ftpRequest.Credentials = new NetworkCredential(m_user, m_pass);
 
                 m_ftpRequest.UseBinary = true;
@@ -78,6 +82,8 @@ namespace EndlessGame.Editor
 
         public void UploadData(string pRemoteFile, byte[] pData)
         {
+            Debug.Log(pRemoteFile);
+            
             try
             {
                 m_ftpRequest = (FtpWebRequest)FtpWebRequest.Create(m_host + "/" + pRemoteFile);

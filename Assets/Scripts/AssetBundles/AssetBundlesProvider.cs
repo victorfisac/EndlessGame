@@ -22,7 +22,7 @@ namespace EndlessGame.AssetBundles
         private string m_subfolder = string.Empty;
         private Dictionary<string, AssetBundle> m_bundlesDict = new Dictionary<string, AssetBundle>();
 
-        private const string BASE_URL = "https://www.victorfisac.com/files/endlessgame/";
+        private const string BASE_URL = "http://www.victorfisac.com/files/endlessgame/";
 
 
         public void LoadVersionManifest(Action<VersionManifest> pOnManifestLoaded)
